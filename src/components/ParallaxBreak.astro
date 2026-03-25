@@ -1,0 +1,37 @@
+---
+interface Props {
+  image: string;
+  height?: string;
+  alt: string;
+  overlayText?: string;
+  overlaySubtext?: string;
+}
+const { image, height = '400px', alt, overlayText, overlaySubtext } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<div class="parallax-section relative overflow-hidden" style={`height: ${height};`}>
+  <div
+    class="parallax-bg absolute inset-0"
+    style={`background-image: url('${base}/${image}'); background-attachment: fixed; background-position: center; background-size: cover;`}
+    role="img"
+    aria-label={alt}
+  ></div>
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(15,15,26,0.7) 0%, rgba(15,15,26,0.3) 50%, rgba(15,15,26,0.7) 100%);"></div>
+  <div class="absolute top-0 left-0 right-0 section-topline"></div>
+  <div class="absolute bottom-0 left-0 right-0 section-topline"></div>
+  {overlayText && (
+    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+      <p class="text-3xl md:text-5xl font-bold gradient-text mb-3">{overlayText}</p>
+      {overlaySubtext && <p class="text-gray-300 text-lg md:text-xl">{overlaySubtext}</p>}
+    </div>
+  )}
+</div>
+
+<style>
+  @supports (-webkit-touch-callout: none) {
+    .parallax-bg { background-attachment: scroll !important; }
+  }
+  @media (max-width: 768px) {
+    .parallax-bg { background-attachment: scroll !important; }
+  }
+</style>

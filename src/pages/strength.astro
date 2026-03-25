@@ -1,0 +1,313 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import NumberedHeading from '../components/NumberedHeading.astro';
+import CTABanner from '../components/CTABanner.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const breadcrumb = [
+  { label: 'HOME', href: `${base}/` },
+  { label: '山全の強み' },
+];
+---
+
+<PageLayout
+  title="山全の強み | 山全金物設計所"
+  description="山全金物設計所の5つの強み。海外拠点によるコスト優位性、JWW/AutoCAD両対応、10年の実績、小ロット対応、LINE・メール迅速レスポンス。"
+  heroTitle="山全の強み"
+  heroSubtitle="STRENGTH"
+  heroBgImage="bg/hero-bg.webp"
+  breadcrumb={breadcrumb}
+>
+
+  <div class="py-20 px-4 relative overflow-hidden" style="background-color: #141428;">
+    <!-- Section top gradient line (animated) -->
+    <div class="absolute top-0 left-0 right-0 section-topline"></div>
+    <!-- Gold radial overlay -->
+    <div class="absolute top-0 left-0 w-1/2 h-1/3 pointer-events-none" style="background: radial-gradient(ellipse at top left, rgba(196,163,90,0.05) 0%, transparent 70%);"></div>
+    <div class="absolute bottom-0 right-0 w-1/2 h-1/3 pointer-events-none" style="background: radial-gradient(ellipse at bottom right, rgba(74,111,165,0.05) 0%, transparent 70%);"></div>
+    <div class="max-w-5xl mx-auto relative z-10">
+
+      <!-- Intro text -->
+      <div class="text-center mb-20 reveal">
+        <p class="text-gray-400 text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
+          山全金物設計所が選ばれる5つの理由。品質・コスト・スピードを高水準でバランスよく提供します。
+        </p>
+      </div>
+
+      <!-- ===== Strength :01 — コスト優位性 ===== -->
+      <div class="strength-item mb-24">
+        <NumberedHeading number={1} title="海外拠点によるコスト優位性" subtitle="COST ADVANTAGE" />
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <!-- Text: LEFT (odd) -->
+          <div class="reveal-left">
+            <p class="text-gray-300 text-base leading-relaxed mb-4">
+              海外拠点での活動により、国内事務所に比べ低コストでの図面作成が可能です。
+              品質を落とさずにコストを抑えたい方に最適なソリューションを提供します。
+            </p>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              設計精度・納品品質はそのままに、コスト削減を実現。継続依頼での長期コスト最適化も対応いたします。
+            </p>
+            <ul class="mt-6 space-y-2">
+              <li class="flex items-center gap-2 text-sm text-gray-300">
+                <svg class="w-4 h-4 text-metallic-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                国内事務所比でのコスト優位
+              </li>
+              <li class="flex items-center gap-2 text-sm text-gray-300">
+                <svg class="w-4 h-4 text-metallic-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                品質・精度は国内水準を維持
+              </li>
+              <li class="flex items-center gap-2 text-sm text-gray-300">
+                <svg class="w-4 h-4 text-metallic-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                継続依頼でさらにコスト最適化
+              </li>
+            </ul>
+          </div>
+          <!-- Icon: RIGHT (odd) -->
+          <div class="flex justify-center reveal-right">
+            <div class="icon-circle w-48 h-48 rounded-full flex items-center justify-center"
+                 style="background: radial-gradient(circle, rgba(196,163,90,0.12) 0%, rgba(196,163,90,0.04) 60%, transparent 100%); border: 2px solid rgba(196,163,90,0.2);">
+              <svg class="w-24 h-24" fill="none" stroke="#c4a35a" viewBox="0 0 24 24" stroke-width="1" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="strength-divider mb-24" aria-hidden="true"></div>
+
+      <!-- ===== Strength :02 — 両CAD対応 ===== -->
+      <div class="strength-item mb-24">
+        <NumberedHeading number={2} title="JWW / AutoCAD 両対応" subtitle="DUAL CAD SUPPORT" />
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <!-- Icon: LEFT (even → swap on desktop) -->
+          <div class="flex justify-center md:order-2 reveal-right">
+            <div class="icon-circle w-48 h-48 rounded-full flex items-center justify-center"
+                 style="background: radial-gradient(circle, rgba(74,111,165,0.15) 0%, rgba(74,111,165,0.05) 60%, transparent 100%); border: 2px solid rgba(74,111,165,0.25);">
+              <svg class="w-24 h-24" fill="none" stroke="#4a6fa5" viewBox="0 0 24 24" stroke-width="1" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+          </div>
+          <!-- Text: RIGHT (even → first on desktop) -->
+          <div class="md:order-1 reveal-left">
+            <p class="text-gray-300 text-base leading-relaxed mb-4">
+              Jw_cad（JWW）およびAutoCAD（DWG / DXF）の両方に対応しています。
+              お客様のCAD環境に合わせたデータ形式で納品するため、追加変換作業は不要です。
+            </p>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              JWWの細かい線種・レイヤ管理から、AutoCADのブロック・属性設定まで、各CADの特性を熟知した作図を提供します。
+            </p>
+            <ul class="mt-6 space-y-2">
+              <li class="flex items-center gap-2 text-sm text-gray-300">
+                <svg class="w-4 h-4 text-steel-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Jw_cad (JWW) 完全対応
+              </li>
+              <li class="flex items-center gap-2 text-sm text-gray-300">
+                <svg class="w-4 h-4 text-steel-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                AutoCAD (DWG / DXF) 完全対応
+              </li>
+              <li class="flex items-center gap-2 text-sm text-gray-300">
+                <svg class="w-4 h-4 text-steel-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                指定フォーマット・レイヤ構成での納品
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="strength-divider mb-24" aria-hidden="true"></div>
+
+      <!-- ===== Strength :03 — 10年の実績 ===== -->
+      <div class="strength-item mb-24">
+        <NumberedHeading number={3} title="10年の実績・多種多様な建築物" subtitle="PROVEN TRACK RECORD" />
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <!-- Text: LEFT (odd) -->
+          <div class="reveal-left">
+            <p class="text-gray-300 text-base leading-relaxed mb-4">
+              2016年より建築金物施工図の設計・作図に従事。官公庁施設、商業施設、集合住宅、病院、学校など
+              多様な建築物での豊富な実績があります。
+            </p>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              長年の経験から培った施工性への理解と、正確な寸法管理で、現場で使える図面を提供します。
+            </p>
+            <div class="mt-6 grid grid-cols-2 gap-3">
+              <div class="stat-badge rounded-lg p-3 text-center"
+                   style="background-color: #242448; border: 1px solid rgba(74,111,165,0.25); border-left: 4px solid #c4a35a; box-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+                <p class="text-2xl font-bold gradient-text">10年</p>
+                <p class="text-xs text-gray-500 mt-1">作図経験</p>
+              </div>
+              <div class="stat-badge rounded-lg p-3 text-center"
+                   style="background-color: #242448; border: 1px solid rgba(74,111,165,0.25); border-left: 4px solid #c4a35a; box-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+                <p class="text-2xl font-bold gradient-text">多業種</p>
+                <p class="text-xs text-gray-500 mt-1">対応実績</p>
+              </div>
+            </div>
+          </div>
+          <!-- Icon: RIGHT (odd) -->
+          <div class="flex justify-center reveal-right">
+            <div class="icon-circle w-48 h-48 rounded-full flex items-center justify-center"
+                 style="background: radial-gradient(circle, rgba(196,163,90,0.12) 0%, rgba(196,163,90,0.04) 60%, transparent 100%); border: 2px solid rgba(196,163,90,0.2);">
+              <svg class="w-24 h-24" fill="none" stroke="#c4a35a" viewBox="0 0 24 24" stroke-width="1" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="strength-divider mb-24" aria-hidden="true"></div>
+
+      <!-- ===== Strength :04 — 小ロット対応 ===== -->
+      <div class="strength-item mb-24">
+        <NumberedHeading number={4} title="小ロットから柔軟に対応" subtitle="FLEXIBLE ORDERS" />
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <!-- Icon: LEFT (even → swap on desktop) -->
+          <div class="flex justify-center md:order-2 reveal-right">
+            <div class="icon-circle w-48 h-48 rounded-full flex items-center justify-center"
+                 style="background: radial-gradient(circle, rgba(74,111,165,0.15) 0%, rgba(74,111,165,0.05) 60%, transparent 100%); border: 2px solid rgba(74,111,165,0.25);">
+              <svg class="w-24 h-24" fill="none" stroke="#4a6fa5" viewBox="0 0 24 24" stroke-width="1" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+              </svg>
+            </div>
+          </div>
+          <!-- Text: RIGHT (even → first on desktop) -->
+          <div class="md:order-1 reveal-left">
+            <p class="text-gray-300 text-base leading-relaxed mb-4">
+              1枚からでもご依頼いただけます。急な追加図面や小規模案件にも柔軟に対応。
+              大量発注だけでなく、スポット依頼にもお応えします。
+            </p>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              まずは試しに1枚というご依頼も大歓迎。品質をご確認いただいてから継続依頼のご検討をいただけます。
+            </p>
+            <ul class="mt-6 space-y-2">
+              <li class="flex items-center gap-2 text-sm text-gray-300">
+                <svg class="w-4 h-4 text-steel-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                1枚からのスポット依頼OK
+              </li>
+              <li class="flex items-center gap-2 text-sm text-gray-300">
+                <svg class="w-4 h-4 text-steel-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                急な追加図面にも対応
+              </li>
+              <li class="flex items-center gap-2 text-sm text-gray-300">
+                <svg class="w-4 h-4 text-steel-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                継続依頼・まとめ依頼も歓迎
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="strength-divider mb-24" aria-hidden="true"></div>
+
+      <!-- ===== Strength :05 — 迅速コミュニケーション ===== -->
+      <div class="strength-item mb-16">
+        <NumberedHeading number={5} title="LINE・メールで迅速コミュニケーション" subtitle="QUICK RESPONSE" />
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <!-- Text: LEFT (odd) -->
+          <div class="reveal-left">
+            <p class="text-gray-300 text-base leading-relaxed mb-4">
+              LINEコール・チャット・メールでスピーディーにやり取りができます。
+              海外拠点であっても、国内と変わらないレスポンスを実現しています。
+            </p>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              図面への質問・修正対応も迅速に。コミュニケーションのストレスなく、スムーズな発注フローを提供します。
+            </p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <div class="flex items-center gap-2 px-4 py-2 rounded-full text-sm text-gray-300"
+                   style="background: rgba(22,22,42,0.8); border: 1px solid rgba(0, 185, 0, 0.3);">
+                <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="#00B900" aria-hidden="true">
+                  <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .629.285.629.63 0 .344-.28.629-.629.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.626 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.915C23.176 14.393 24 12.458 24 10.314"/>
+                </svg>
+                LINE
+              </div>
+              <div class="flex items-center gap-2 px-4 py-2 rounded-full text-sm text-gray-300"
+                   style="background: rgba(22,22,42,0.8); border: 1px solid rgba(74,111,165,0.3);">
+                <svg class="w-4 h-4 text-steel-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                メール
+              </div>
+              <div class="flex items-center gap-2 px-4 py-2 rounded-full text-sm text-gray-300"
+                   style="background: rgba(22,22,42,0.8); border: 1px solid rgba(196,163,90,0.2);">
+                <svg class="w-4 h-4 text-metallic-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                迅速対応
+              </div>
+            </div>
+          </div>
+          <!-- Icon: RIGHT (odd) -->
+          <div class="flex justify-center reveal-right">
+            <div class="icon-circle w-48 h-48 rounded-full flex items-center justify-center"
+                 style="background: radial-gradient(circle, rgba(196,163,90,0.12) 0%, rgba(196,163,90,0.04) 60%, transparent 100%); border: 2px solid rgba(196,163,90,0.2);">
+              <svg class="w-24 h-24" fill="none" stroke="#c4a35a" viewBox="0 0 24 24" stroke-width="1" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA Banner -->
+  <CTABanner
+    title="まずはお気軽にご相談ください"
+    description="図面の仕様・数量・納期などお気軽にご相談ください。LINEかメールでお問い合わせいただけます。"
+    buttonText="お問い合わせ"
+    buttonHref="/contact/"
+  />
+
+</PageLayout>
+
+<style>
+  /* Divider between strength items */
+  .strength-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(196,163,90,0.25) 30%, rgba(196,163,90,0.25) 70%, transparent 100%);
+  }
+
+  /* Icon circle subtle animation on hover */
+  .icon-circle {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 0 30px rgba(196, 163, 90, 0.12);
+  }
+  .icon-circle:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 50px rgba(196, 163, 90, 0.25);
+  }
+
+  /* Tailwind override */
+  .text-metallic-gold { color: #c4a35a; }
+  .text-steel-blue { color: #4a6fa5; }
+</style>

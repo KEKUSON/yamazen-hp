@@ -1,25 +1,83 @@
 ---
-// Navbar.astro — sticky glass-morphism navigation bar
+const base = import.meta.env.BASE_URL;
+const currentPath = Astro.url.pathname;
+
+// Helper: is the given path the active page?
+function isActive(path: string): boolean {
+  // Normalize: strip trailing slash for comparison (but keep root as-is)
+  const normalized = path.endsWith('/') && path.length > 1 ? path.slice(0, -1) : path;
+  const current = currentPath.endsWith('/') && currentPath.length > 1 ? currentPath.slice(0, -1) : currentPath;
+  return current === normalized;
+}
+
+// Nav links (href is the full deployed path including base)
+const navLinks = [
+  { label: '山全の強み', href: `${base}/strength/` },
+  { label: 'サービス', href: `${base}/services/`, hasDropdown: true },
+  { label: '作図実績', href: `${base}/portfolio/` },
+  { label: '料金', href: `${base}/pricing/` },
+  { label: 'ご依頼の流れ', href: `${base}/workflow/` },
+];
+
+const serviceDropdown = [
+  { label: '手摺・タラップ', href: `${base}/services/#handrails` },
+  { label: 'パネル・三方枠', href: `${base}/services/#panels` },
+  { label: '特殊金物', href: `${base}/services/#special` },
+];
 ---
 
 <nav id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
     <!-- Logo -->
-    <a href="#hero" class="text-lg font-bold tracking-wide shrink-0" aria-label="山全金物設計所 トップへ">
+    <a href={`${base}/`} class="text-lg font-bold tracking-wide shrink-0" aria-label="山全金物設計所 トップへ">
       <span class="gradient-text">山全</span><span class="hidden sm:inline text-white/90">金物設計所</span>
     </a>
 
     <!-- Desktop nav -->
     <div class="hidden md:flex items-center gap-5 lg:gap-6">
-      <a href="#about"    class="nav-link text-sm text-gray-300 hover:text-white transition-colors duration-200">会社概要</a>
-      <a href="#services" class="nav-link text-sm text-gray-300 hover:text-white transition-colors duration-200">サービス</a>
-      <a href="#portfolio" class="nav-link text-sm text-gray-300 hover:text-white transition-colors duration-200">施工図</a>
-      <a href="#pricing"  class="nav-link text-sm text-gray-300 hover:text-white transition-colors duration-200">料金</a>
-      <a href="#workflow" class="nav-link text-sm text-gray-300 hover:text-white transition-colors duration-200">ご依頼の流れ</a>
-      <a href="#contact"
-         class="ml-2 px-5 py-2 bg-steel-blue hover:bg-steel-light text-white text-sm font-medium rounded
-                shadow-md hover:shadow-steel-blue/30 transition-all duration-300">
+      {navLinks.map(link => (
+        link.hasDropdown ? (
+          <div class="relative group">
+            <a
+              href={link.href}
+              class={`nav-link text-sm transition-colors duration-200 flex items-center gap-1 ${isActive(link.href) ? 'active text-metallic-gold' : 'text-gray-300 hover:text-white'}`}
+            >
+              {link.label}
+              <svg class="w-3 h-3 opacity-60 group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </a>
+            <!-- Dropdown -->
+            <div class="nav-dropdown absolute top-full left-1/2 -translate-x-1/2 mt-2 w-44 rounded-lg overflow-hidden
+                        opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto
+                        transition-all duration-200 translate-y-1 group-hover:translate-y-0">
+              <div class="bg-dark-accent border border-gray-700/50 rounded-lg py-1 shadow-xl shadow-black/40">
+                {serviceDropdown.map(item => (
+                  <a
+                    href={item.href}
+                    class="block px-4 py-2 text-sm text-gray-300 hover:text-metallic-gold hover:bg-white/5 transition-colors duration-150"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <a
+            href={link.href}
+            class={`nav-link text-sm transition-colors duration-200 ${isActive(link.href) ? 'active text-metallic-gold' : 'text-gray-300 hover:text-white'}`}
+          >
+            {link.label}
+          </a>
+        )
+      ))}
+      <a
+        href={`${base}/contact/`}
+        class="ml-2 px-5 py-2 bg-steel-blue hover:bg-steel-light text-white text-sm font-medium rounded
+               shadow-md hover:shadow-steel-blue/30 transition-all duration-300"
+      >
         お問い合わせ
       </a>
     </div>
@@ -39,16 +97,16 @@
   </div>
 </nav>
 
-<!-- Mobile menu overlay (separate from nav so it can cover full screen) -->
+<!-- Mobile menu overlay -->
 <div
   id="mobile-menu"
   class="fixed inset-0 bg-dark-accent/95 backdrop-blur-lg z-50
-         flex flex-col items-center justify-center gap-8
+         flex flex-col items-center justify-center gap-6
          opacity-0 pointer-events-none
          transition-opacity duration-300"
   aria-hidden="true"
 >
-  <!-- Close button (top-right) -->
+  <!-- Close button -->
   <button
     id="menu-close"
     class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
@@ -60,37 +118,52 @@
   </button>
 
   <!-- Logo inside overlay -->
-  <a href="#hero" class="mobile-nav-link text-2xl font-bold mb-2">
+  <a href={`${base}/`} class="mobile-nav-link text-2xl font-bold mb-2">
     <span class="gradient-text">山全</span><span class="text-white/90">金物設計所</span>
   </a>
 
-  <nav class="flex flex-col items-center gap-6" aria-label="モバイルナビゲーション">
-    <a href="#about"    class="mobile-nav-link text-2xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">会社概要</a>
-    <a href="#services" class="mobile-nav-link text-2xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">サービス</a>
-    <a href="#portfolio" class="mobile-nav-link text-2xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">施工図</a>
-    <a href="#pricing"  class="mobile-nav-link text-2xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">料金</a>
-    <a href="#workflow" class="mobile-nav-link text-2xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">ご依頼の流れ</a>
-    <a href="#contact"
-       class="mobile-nav-link mt-2 px-10 py-3 bg-steel-blue hover:bg-steel-light text-white text-xl font-medium rounded
-              transition-all duration-300">
+  <nav class="flex flex-col items-center gap-5 w-full px-8" aria-label="モバイルナビゲーション">
+    <a href={`${base}/strength/`}  class="mobile-nav-link text-xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">山全の強み</a>
+    <a href={`${base}/services/`}  class="mobile-nav-link text-xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">サービス</a>
+    <!-- Service sub-links on mobile -->
+    <div class="flex flex-col items-center gap-2 text-sm border-t border-gray-700/50 pt-3 w-full">
+      <a href={`${base}/services/#handrails`} class="mobile-nav-link text-gray-400 hover:text-metallic-gold transition-colors duration-200">手摺・タラップ</a>
+      <a href={`${base}/services/#panels`}    class="mobile-nav-link text-gray-400 hover:text-metallic-gold transition-colors duration-200">パネル・三方枠</a>
+      <a href={`${base}/services/#special`}   class="mobile-nav-link text-gray-400 hover:text-metallic-gold transition-colors duration-200">特殊金物</a>
+    </div>
+    <a href={`${base}/portfolio/`} class="mobile-nav-link text-xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">作図実績</a>
+    <a href={`${base}/pricing/`}   class="mobile-nav-link text-xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">料金</a>
+    <a href={`${base}/workflow/`}  class="mobile-nav-link text-xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">ご依頼の流れ</a>
+    <a
+      href={`${base}/contact/`}
+      class="mobile-nav-link mt-2 px-10 py-3 bg-steel-blue hover:bg-steel-light text-white text-lg font-medium rounded transition-all duration-300"
+    >
       お問い合わせ
     </a>
   </nav>
 </div>
 
 <style>
+  /* Initial state — semi-transparent with subtle blur */
+  #navbar {
+    background-color: rgba(15, 15, 26, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-bottom: 1px solid rgba(74, 111, 165, 0.1);
+  }
+
   /* Scrolled state — applied via JS */
   #navbar.scrolled {
-    background-color: rgba(15, 15, 26, 0.90); /* dark-accent/90 */
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(107, 143, 196, 0.15);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    background-color: rgba(15, 15, 26, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(107, 143, 196, 0.25);
+    box-shadow: 0 1px 0 rgba(196,163,90,0.3), 0 4px 30px rgba(0,0,0,0.5);
   }
 
   /* Active nav link (desktop) */
   #navbar .nav-link.active {
-    color: #c4a35a; /* metallic-gold */
+    color: #c4a35a;
   }
 
   /* Active nav link (mobile) */
@@ -115,6 +188,11 @@
   #menu-toggle.open .ham-line:nth-child(3) {
     transform: translateY(-6.5px) rotate(-45deg);
   }
+
+  /* Tailwind overrides for nav buttons (needed for SSR) */
+  .bg-steel-blue { background-color: #4a6fa5; }
+  .hover\:bg-steel-light:hover { background-color: #6b8fc4; }
+  .text-metallic-gold { color: #c4a35a; }
 </style>
 
 <script>
@@ -150,35 +228,7 @@
     handleScroll();
 
 
-    // ── 2. Active section tracking (IntersectionObserver) ──────────────────
-    const sectionIds = ['hero', 'about', 'services', 'portfolio', 'pricing', 'workflow', 'contact'];
-    const desktopLinks = navbar.querySelectorAll<HTMLAnchorElement>('.nav-link');
-    const mobileLinks  = mobileMenu.querySelectorAll<HTMLAnchorElement>('.mobile-nav-link');
-
-    function setActive(id: string) {
-      const selector = `[href="#${id}"]`;
-      desktopLinks.forEach(el => el.classList.toggle('active', el.getAttribute('href') === `#${id}`));
-      mobileLinks.forEach(el  => el.classList.toggle('active', el.getAttribute('href') === `#${id}`));
-    }
-
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActive(entry.target.id);
-        }
-      });
-    }, {
-      rootMargin: '-30% 0px -60% 0px',
-      threshold: 0,
-    });
-
-    sectionIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) sectionObserver.observe(el);
-    });
-
-
-    // ── 3. Mobile menu helpers ─────────────────────────────────────────────
+    // ── 2. Mobile menu helpers ─────────────────────────────────────────────
     function openMenu() {
       mobileMenu.classList.add('open');
       mobileMenu.setAttribute('aria-hidden', 'false');

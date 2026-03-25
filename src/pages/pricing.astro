@@ -1,0 +1,216 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionDivider from '../components/SectionDivider.astro';
+import CTABanner from '../components/CTABanner.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const plans = [
+  {
+    title: '一般建築金物 製作図',
+    subtitle: 'FABRICATION DRAWING',
+    size: 'A1 / A2 サイズ',
+    price: '¥9,000〜',
+    unit: '/ 枚',
+    examples: ['手摺', 'タラップ', 'パネル等'],
+    featured: true,
+  },
+  {
+    title: 'アルミ既製品 納まり図',
+    subtitle: 'DETAIL DRAWING',
+    size: 'A1 / A2 サイズ',
+    price: '¥4,500〜',
+    unit: '/ 枚',
+    examples: ['アルミ既製品の納まり確認図'],
+    featured: false,
+  },
+];
+
+const notes = [
+  '複雑な図面・特殊仕様の場合は別途ご相談',
+  '物量によるボリュームディスカウントあり',
+  'お見積りは無料です',
+];
+---
+
+<PageLayout
+  title="料金について | 山全金物設計所"
+  description="建築金物施工図の料金について。一般製作図9,000円〜、アルミ既製品納まり図4,500円〜。物量によりお見積り。"
+  heroTitle="料金について"
+  heroSubtitle="PRICING"
+  heroBgImage="bg/pricing-bg.webp"
+  breadcrumb={[
+    { label: 'HOME', href: `${base}/` },
+    { label: '料金' },
+  ]}
+>
+
+  <!-- ===== Section 1: 料金カード — DARK background ===== -->
+  <section class="py-20 px-4 relative overflow-hidden" style="background-color: #1c1c38;">
+    <!-- Section top gradient line (animated) -->
+    <div class="absolute top-0 left-0 right-0 section-topline"></div>
+    <div class="absolute top-0 left-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse at top left, rgba(196,163,90,0.05) 0%, transparent 65%);"></div>
+    <div class="max-w-5xl mx-auto relative z-10">
+
+      <!-- Intro — light text on dark bg -->
+      <p class="reveal text-center text-base md:text-lg mb-12 leading-relaxed text-gray-300">
+        図面の種類・物量に応じて個別にお見積りいたします。
+      </p>
+
+      <!-- Price cards — dark on dark bg -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-stagger">
+        {plans.map((plan) => (
+          <div class={`price-card rounded-xl p-8 relative flex flex-col ${plan.featured ? 'price-card-featured' : ''}`}>
+
+            {/* Recommended badge */}
+            {plan.featured && (
+              <div class="badge-recommended">
+                <span>おすすめ</span>
+              </div>
+            )}
+
+            {/* Subtitle */}
+            <p class="text-xs tracking-widest mb-2 font-medium"
+               style="color: #6b8fc4;">{plan.subtitle}</p>
+
+            {/* Title */}
+            <h3 class="text-lg md:text-xl font-bold text-white mb-1">{plan.title}</h3>
+
+            {/* Size */}
+            <p class="text-sm text-gray-400 mb-6">{plan.size}</p>
+
+            {/* Price */}
+            <div class="flex items-end gap-1 mb-6">
+              <span class="gradient-text text-4xl md:text-5xl font-bold leading-none">{plan.price}</span>
+              <span class="text-gray-400 text-base pb-1">{plan.unit}</span>
+            </div>
+
+            {/* Examples */}
+            <ul class="space-y-2 mt-auto">
+              {plan.examples.map((ex) => (
+                <li class="flex items-center gap-2 text-sm text-gray-300">
+                  <svg class="w-4 h-4 flex-shrink-0" style="color: #c4a35a;" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                  {ex}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider direction="right" fromColor="dark-bg" toColor="dark-accent" />
+
+  <!-- ===== Section 2: 備考 ===== -->
+  <section class="py-20 px-4 relative overflow-hidden" style="background-color: #141428;">
+    <!-- Section top gradient line (animated) -->
+    <div class="absolute top-0 left-0 right-0 section-topline"></div>
+    <div class="absolute bottom-0 right-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse at bottom right, rgba(74,111,165,0.06) 0%, transparent 65%);"></div>
+    <div class="max-w-3xl mx-auto reveal relative z-10">
+      <div class="notice-box rounded-xl p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <!-- Info icon -->
+          <div class="notice-icon-wrap">
+            <svg class="w-5 h-5" style="color: #c4a35a;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h2 class="text-base md:text-lg font-bold text-white">料金に関するご注意</h2>
+        </div>
+
+        <ul class="space-y-4">
+          {notes.map((note) => (
+            <li class="flex items-start gap-3 text-gray-300 text-sm md:text-base leading-relaxed">
+              <span class="notice-bullet flex-shrink-0 mt-1">※</span>
+              <span>{note}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider direction="left" fromColor="dark-accent" toColor="dark-bg" />
+
+  <!-- CTA -->
+  <div class="bg-dark-bg pb-4">
+    <CTABanner
+      title="まずはお気軽にお見積り依頼を"
+      description="物量・仕様に応じた個別お見積りを無料で承ります。LINEまたはメールでお気軽にご連絡ください。"
+      buttonText="お問い合わせ・お見積り依頼"
+      buttonHref="/contact/"
+    />
+  </div>
+
+</PageLayout>
+
+<style>
+  .price-card {
+    background-color: #242448;
+    border: 1px solid rgba(74, 111, 165, 0.25);
+    border-left: 4px solid #c4a35a;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .price-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(196, 163, 90, 0.2);
+  }
+
+  .price-card-featured {
+    border-color: rgba(196, 163, 90, 0.5);
+    border-left-color: #c4a35a;
+    background-color: #242448;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(196, 163, 90, 0.15);
+  }
+
+  .price-card-featured:hover {
+    border-color: rgba(196, 163, 90, 0.75);
+    box-shadow: 0 12px 40px rgba(196, 163, 90, 0.25);
+  }
+
+  .badge-recommended {
+    position: absolute;
+    top: -1px;
+    right: 1.5rem;
+    background: linear-gradient(135deg, #c4a35a 0%, #e8c87a 100%);
+    color: #0f0f1a;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.25rem 0.85rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+    letter-spacing: 0.04em;
+    box-shadow: 0 4px 12px rgba(196, 163, 90, 0.35);
+  }
+
+  .notice-box {
+    background-color: #1e1e3c;
+    border: 1px solid rgba(74, 111, 165, 0.25);
+    border-left: 4px solid #c4a35a;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  }
+
+  .notice-icon-wrap {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: rgba(196, 163, 90, 0.12);
+    border: 1px solid rgba(196, 163, 90, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .notice-bullet {
+    color: #c4a35a;
+    font-weight: 700;
+    font-size: 0.95em;
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  bgImage?: string;
+}
+
+const { title, subtitle, bgImage } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="page-hero relative flex items-center justify-center overflow-hidden" style="height: 300px;">
+  <!-- Background layer -->
+  <div class="absolute inset-0 bg-dark-accent"></div>
+
+  <!-- Default hero-bg fallback (always shown unless overridden) -->
+  {!bgImage && (
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      style={`background-image: url('${base}bg/hero-bg.webp'); opacity: 0.08;`}
+    ></div>
+  )}
+
+  <!-- Optional bg image at low opacity -->
+  {bgImage && (
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      style={`background-image: url('${base}${bgImage}'); opacity: 0.12;`}
+    ></div>
+  )}
+
+  <!-- Dark gradient overlay -->
+  <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(15,15,26,0.6) 0%, rgba(15,15,26,0.85) 100%);"></div>
+
+  <!-- Grid pattern overlay -->
+  <div class="absolute inset-0 opacity-5" style="background-image: linear-gradient(rgba(107,143,196,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(107,143,196,0.3) 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 text-center px-4">
+    <h1 class="text-4xl md:text-5xl font-bold text-white tracking-wide mb-3 reveal">
+      {title}
+    </h1>
+    <!-- Gold gradient underline decoration -->
+    <div class="page-hero-underline mx-auto mb-4 reveal"></div>
+    {subtitle && (
+      <p class="text-gray-400 text-base md:text-lg tracking-widest uppercase reveal">{subtitle}</p>
+    )}
+  </div>
+</section>
+
+<style>
+  .page-hero-underline {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #c4a35a, #e8c87a, #c4a35a, transparent);
+    border-radius: 2px;
+  }
+</style>

@@ -1,0 +1,211 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionDivider from '../components/SectionDivider.astro';
+import CTABanner from '../components/CTABanner.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const stats = [
+  { value: '約10年', label: '実績年数', numeric: false },
+  { value: 'JWW / AutoCAD', label: '対応CAD', numeric: false },
+  { value: '10社以上', label: '取引先', numeric: false },
+];
+
+const infoRows = [
+  { key: '屋号', value: '山全金物設計所' },
+  { key: '代表', value: '山本' },
+  { key: '所在地', value: '海外拠点にて活動' },
+  { key: '設立', value: '2019年（実務経験は2016年〜）' },
+  { key: '事業内容', value: '建築金物施工図の設計・作図' },
+  { key: '対応CAD', value: 'JWW (Jw_cad) / AutoCAD (DWG/DXF)' },
+  { key: '連絡先', value: 'LINE / Email (yamazen.ken@gmail.com)' },
+];
+---
+
+<PageLayout
+  title="会社概要 | 山全金物設計所"
+  description="山全金物設計所の代表メッセージ・事務所情報・実績をご紹介します。2016年より建築金物施工図設計に従事。"
+  heroTitle="会社概要"
+  heroSubtitle="ABOUT US"
+  heroBgImage="bg/about-bg.webp"
+  breadcrumb={[
+    { label: 'HOME', href: `${base}/` },
+    { label: '会社概要' },
+  ]}
+>
+
+  <!-- ===== Section 1: 代表メッセージ — DARK background ===== -->
+  <section class="py-20 px-4 relative overflow-hidden" style="background-color: #1c1c38;">
+    <!-- Section top gradient line (animated) -->
+    <div class="absolute top-0 left-0 right-0 section-topline"></div>
+    <div class="absolute top-0 left-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse at top left, rgba(196,163,90,0.05) 0%, transparent 65%);"></div>
+    <div class="max-w-4xl mx-auto relative z-10">
+
+      <div class="reveal">
+        <!-- Gold-bordered quote block -->
+        <blockquote class="quote-block mb-8">
+          <p class="gradient-text text-xl md:text-2xl lg:text-3xl font-bold leading-relaxed">
+            建築金物施工図を通じて、安全で美しい建物づくりに貢献したい。
+          </p>
+        </blockquote>
+
+        <!-- Body text — light on dark bg -->
+        <p class="text-base md:text-lg leading-loose mb-8 text-gray-300">
+          2016年より建築金物施工図の設計に従事。父の事業にて3年の実務経験を積んだ後、独立開業いたしました。山全金物設計所として、官公庁施設・商業施設・集合住宅など多種多様な建築金物の施工図を手がけてまいりました。AIを活用した効率的な作図で、高精度・短納期を実現。お客様のご要望に寄り添い、一枚一枚丁寧に作図いたします。
+        </p>
+
+        <!-- Signature -->
+        <p class="text-right font-medium text-sm md:text-base tracking-wide" style="color: #c4a35a;">
+          山全金物設計所 代表&nbsp;&nbsp;山本
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider direction="right" fromColor="dark-bg" toColor="dark-accent" />
+
+  <!-- ===== Section 2: 事務所情報 ===== -->
+  <section class="py-20 px-4 relative overflow-hidden" style="background-color: #141428;">
+    <!-- Section top gradient line (animated) -->
+    <div class="absolute top-0 left-0 right-0 section-topline"></div>
+    <div class="absolute bottom-0 right-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse at bottom right, rgba(74,111,165,0.06) 0%, transparent 65%);"></div>
+    <div class="max-w-4xl mx-auto reveal relative z-10">
+      <div class="flex items-center justify-center gap-3 mb-3">
+        <span class="w-8 h-px" style="background: rgba(196,163,90,0.6);"></span>
+        <p class="text-steel-blue text-xs tracking-[0.3em] uppercase font-medium">PROFILE</p>
+        <span class="w-8 h-px" style="background: rgba(196,163,90,0.6);"></span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">
+        <span class="gradient-text">事務所情報</span>
+      </h2>
+
+      <div class="info-card rounded-xl overflow-hidden">
+        {infoRows.map((row, i) => (
+          <div class={`info-row flex flex-col sm:flex-row ${i % 2 === 0 ? 'bg-dark-bg/40' : 'bg-dark-bg/20'}`}>
+            <dt class="info-label sm:w-40 flex-shrink-0 text-steel-light font-medium text-sm">
+              {row.key}
+            </dt>
+            <dd class="info-value text-gray-200 text-sm md:text-base">
+              {row.value}
+            </dd>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider direction="left" fromColor="dark-accent" toColor="dark-bg" />
+
+  <!-- ===== Section 3: 数字で見る山全 ===== -->
+  <section class="py-20 px-4 relative overflow-hidden" style="background-color: #1c1c38;">
+    <!-- Section top gradient line (animated) -->
+    <div class="absolute top-0 left-0 right-0 section-topline"></div>
+    <div class="absolute top-0 right-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse at top right, rgba(196,163,90,0.05) 0%, transparent 65%);"></div>
+    <div class="max-w-5xl mx-auto relative z-10">
+      <div class="flex items-center justify-center gap-3 mb-3 reveal">
+        <span class="w-8 h-px" style="background: rgba(196,163,90,0.6);"></span>
+        <p class="text-steel-blue text-xs tracking-[0.3em] uppercase font-medium">NUMBERS</p>
+        <span class="w-8 h-px" style="background: rgba(196,163,90,0.6);"></span>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-bold mb-12 text-center reveal">
+        <span class="gradient-text">数字で見る山全</span>
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-stagger">
+        {stats.map((stat) => (
+          <div class="stat-card rounded-xl p-8 text-center group">
+            <div class="stat-value gradient-text text-3xl md:text-4xl font-bold mb-3 leading-tight">
+              {stat.value}
+            </div>
+            <div class="text-gray-400 text-sm md:text-base tracking-wide">
+              {stat.label}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SectionDivider direction="right" fromColor="dark-bg" toColor="dark-accent" />
+
+  <!-- CTA -->
+  <div class="bg-dark-accent pb-4">
+    <CTABanner
+      title="まずはお気軽にご相談ください"
+      description="建築金物施工図のご依頼・お見積りはLINEまたはメールで承っております。"
+      buttonText="お問い合わせ"
+      buttonHref="/contact/"
+    />
+  </div>
+
+</PageLayout>
+
+<style>
+  .quote-block {
+    border-left: 4px solid #c4a35a;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, rgba(196, 163, 90, 0.08) 0%, rgba(74, 111, 165, 0.05) 100%);
+    border-radius: 0 0.75rem 0.75rem 0;
+    position: relative;
+    box-shadow: 0 2px 12px rgba(196,163,90,0.12);
+  }
+
+  .quote-block::before {
+    content: '"';
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    font-size: 5rem;
+    color: #c4a35a;
+    opacity: 0.15;
+    line-height: 1;
+    font-family: Georgia, serif;
+  }
+
+  .info-card {
+    background-color: #1e1e3c;
+    border: 1px solid rgba(74, 111, 165, 0.25);
+    border-left: 4px solid #c4a35a;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  }
+
+  .info-row {
+    padding: 0.9rem 1.5rem;
+    gap: 1.25rem;
+    align-items: baseline;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    transition: background 0.2s ease;
+  }
+
+  .info-row:last-child {
+    border-bottom: none;
+  }
+
+  .info-row:hover {
+    background: rgba(74, 111, 165, 0.08) !important;
+  }
+
+  .info-label {
+    min-width: 8rem;
+    padding-right: 1rem;
+  }
+
+  .stat-card {
+    background-color: #1e1e3c;
+    border: 1px solid rgba(74, 111, 165, 0.25);
+    border-left: 4px solid #c4a35a;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    cursor: default;
+  }
+
+  .stat-card:hover {
+    border-color: rgba(74, 111, 165, 0.5);
+    border-left-color: #e8c87a;
+    box-shadow: 0 8px 24px rgba(196, 163, 90, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .text-steel-light { color: #6b8fc4; }
+  .text-metallic-gold { color: #c4a35a; }
+</style>

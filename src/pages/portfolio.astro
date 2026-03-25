@@ -1,0 +1,434 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import CTABanner from '../components/CTABanner.astro';
+
+const base = import.meta.env.BASE_URL;
+
+// Portfolio image data
+const portfolioItems = [
+  {
+    id: 0,
+    filename: 'sample_tarapp.webp',
+    title: 'SUSタラップ 平面詳細図',
+    category: 'ladders',
+  },
+  {
+    id: 1,
+    filename: '08_stopper.webp',
+    title: '落下防止ストッパー 詳細図',
+    category: 'others',
+  },
+  {
+    id: 2,
+    filename: '07_yukamikiri.webp',
+    title: '風除室 床見切 詳細図',
+    category: 'others',
+  },
+  {
+    id: 3,
+    filename: '06_tesuri_corridor.webp',
+    title: '通路手摺 施工図',
+    category: 'handrails',
+  },
+  {
+    id: 4,
+    filename: '01_tesuri_okujo.webp',
+    title: '屋上手摺 施工図',
+    category: 'handrails',
+  },
+  {
+    id: 5,
+    filename: '02_tesuri_pipe.webp',
+    title: 'パイプ手摺 施工図',
+    category: 'handrails',
+  },
+  {
+    id: 6,
+    filename: '03_tarapp_catwalk.webp',
+    title: 'キャットウォーク タラップ',
+    category: 'ladders',
+  },
+];
+
+const filters = [
+  { key: 'all', label: 'すべて' },
+  { key: 'handrails', label: '手摺' },
+  { key: 'ladders', label: 'タラップ' },
+  { key: 'others', label: 'その他' },
+];
+---
+
+<PageLayout
+  title="作図実績 | 山全金物設計所"
+  description="山全金物設計所の作図実績一覧。屋上手摺・パイプ手摺・タラップ・三方枠・面台など建築金物施工図のポートフォリオ。"
+  heroTitle="作図実績"
+  heroSubtitle="PORTFOLIO"
+  heroBgImage="bg/hero-bg.webp"
+  breadcrumb={[
+    { label: 'HOME', href: `${base}/` },
+    { label: '作図実績' },
+  ]}
+>
+
+  <section class="py-16 px-4 relative overflow-hidden" style="background-color: #141428;">
+    <!-- Section top gradient line (animated) -->
+    <div class="absolute top-0 left-0 right-0 section-topline"></div>
+    <!-- Blue gradient bottom-right -->
+    <div class="absolute bottom-0 right-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse at bottom right, rgba(74,111,165,0.06) 0%, transparent 65%);"></div>
+    <!-- Gold gradient top-left -->
+    <div class="absolute top-0 left-0 w-1/3 h-1/3 pointer-events-none" style="background: radial-gradient(ellipse at top left, rgba(196,163,90,0.04) 0%, transparent 65%);"></div>
+    <div class="max-w-6xl mx-auto relative z-10">
+
+      <!-- Disclaimer -->
+      <p class="text-center text-sm text-gray-500 mb-10 reveal">
+        ※現場名・社名は匿名化処理済み
+      </p>
+
+      <!-- Filter buttons -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12 reveal" id="filter-bar">
+        {filters.map((f) => (
+          <button
+            class={`filter-btn text-sm px-5 py-2 rounded-full border transition-all duration-200
+              ${f.key === 'all'
+                ? 'active border-steel-blue bg-steel-blue/20 text-steel-light'
+                : 'border-gray-700 text-gray-400 hover:border-steel-blue/60 hover:text-gray-200'
+              }`}
+            data-filter={f.key}
+            type="button"
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      <!-- Image grid — gold frame wrapper -->
+      <div class="rounded-2xl p-1" style="background: rgba(196,163,90,0.08);">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal-stagger" id="portfolio-grid">
+        {portfolioItems.map((item) => (
+          <div
+            class="portfolio-card group relative rounded-xl overflow-hidden cursor-pointer"
+            data-category={item.category}
+            data-index={item.id}
+            tabindex="0"
+            role="button"
+            aria-label={`${item.title}を拡大表示`}
+          >
+            <!-- Image -->
+            <div class="aspect-[4/3] bg-dark-surface overflow-hidden">
+              <img
+                src={`${base}/portfolio/${item.filename}`}
+                alt={item.title}
+                loading="lazy"
+                width="640"
+                height="480"
+                class="w-full h-full object-cover object-center transition-transform duration-500
+                       group-hover:scale-105"
+              />
+            </div>
+
+            <!-- Hover overlay with caption -->
+            <div class="portfolio-overlay absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100
+                        transition-opacity duration-300 pointer-events-none">
+              <p class="text-white font-medium text-sm md:text-base leading-snug drop-shadow-lg">
+                {item.title}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      </div><!-- /gold frame -->
+
+      <!-- Empty state -->
+      <p class="hidden text-center text-gray-500 py-16 text-sm" id="no-results">
+        該当する実績はありません
+      </p>
+
+    </div>
+  </section>
+
+  <!-- Lightbox overlay -->
+  <div
+    id="lightbox"
+    class="lightbox-overlay fixed inset-0 z-50 hidden items-center justify-center bg-black/92 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-label="画像ライトボックス"
+  >
+    <!-- Close button -->
+    <button
+      id="lb-close"
+      class="absolute top-4 right-5 z-60 text-white/70 hover:text-white transition-colors duration-200
+             w-11 h-11 flex items-center justify-center rounded-full hover:bg-white/10"
+      aria-label="閉じる"
+    >
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <!-- Prev arrow -->
+    <button
+      id="lb-prev"
+      class="lb-arrow absolute left-2 md:left-6 z-60 text-white/70 hover:text-white transition-colors duration-200
+             w-11 h-11 flex items-center justify-center rounded-full hover:bg-white/10"
+      aria-label="前の画像"
+    >
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+    </button>
+
+    <!-- Next arrow -->
+    <button
+      id="lb-next"
+      class="lb-arrow absolute right-2 md:right-6 z-60 text-white/70 hover:text-white transition-colors duration-200
+             w-11 h-11 flex items-center justify-center rounded-full hover:bg-white/10"
+      aria-label="次の画像"
+    >
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <!-- Image + caption container -->
+    <div class="flex flex-col items-center px-16 md:px-24 max-w-5xl w-full">
+      <img
+        id="lb-image"
+        src=""
+        alt=""
+        class="max-h-[72vh] max-w-full w-auto h-auto rounded-lg shadow-2xl object-contain"
+      />
+      <div class="mt-4 flex items-center gap-6">
+        <p id="lb-caption" class="text-gray-200 text-sm md:text-base"></p>
+        <span id="lb-counter" class="text-gray-500 text-xs tabular-nums"></span>
+      </div>
+    </div>
+  </div>
+
+  <CTABanner
+    title="図面のご依頼・ご相談はお気軽に"
+    description="作図実績をご覧いただきありがとうございます。まずはお気軽にお問い合わせください。"
+    buttonText="お問い合わせ"
+    buttonHref="/contact/"
+  />
+
+</PageLayout>
+
+<style>
+  /* ====== Filter button active state ====== */
+  .filter-btn.active {
+    background-color: rgba(74, 111, 165, 0.25);
+    border-color: #4a6fa5;
+    color: #6b8fc4;
+  }
+
+  /* ====== Portfolio card ====== */
+  .portfolio-card {
+    background: #1e1e3c;
+    border: 1px solid rgba(196, 163, 90, 0.30);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .portfolio-card:hover,
+  .portfolio-card:focus-visible {
+    border-color: rgba(196, 163, 90, 0.6);
+    box-shadow: 0 8px 32px rgba(196, 163, 90, 0.25);
+    transform: translateY(-2px);
+    outline: none;
+  }
+
+  .portfolio-card:focus-visible {
+    box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.6);
+  }
+
+  /* ====== Category badge ====== */
+  .category-badge {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 9999px;
+    background: rgba(10, 10, 20, 0.85);
+    border: 1px solid rgba(74, 111, 165, 0.5);
+    color: #6b8fc4;
+    backdrop-filter: blur(4px);
+    letter-spacing: 0.03em;
+  }
+
+  /* ====== Hover overlay gradient ====== */
+  .portfolio-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+  }
+
+  /* ====== Lightbox ====== */
+  .lightbox-overlay {
+    display: none;
+  }
+
+  .lightbox-overlay.open {
+    display: flex;
+  }
+
+  /* Hide filtered-out cards */
+  .portfolio-card.hidden-card {
+    display: none;
+  }
+
+  /* Smooth card visibility */
+  .portfolio-card {
+    animation: card-fade-in 0.35s ease forwards;
+  }
+
+  @keyframes card-fade-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<script>
+  // ===== Portfolio data (mirrors frontmatter) =====
+  const ITEMS: { id: number; src: string; title: string; category: string }[] = [
+    { id: 0, src: 'sample_tarapp.webp',      title: 'SUSタラップ 平面詳細図',          category: 'ladders' },
+    { id: 1, src: '08_stopper.webp',         title: '落下防止ストッパー 詳細図',        category: 'others' },
+    { id: 2, src: '07_yukamikiri.webp',      title: '風除室 床見切 詳細図',            category: 'others' },
+    { id: 3, src: '06_tesuri_corridor.webp', title: '通路手摺 施工図',                  category: 'handrails' },
+    { id: 4, src: '01_tesuri_okujo.webp',    title: '屋上手摺 施工図',                  category: 'handrails' },
+    { id: 5, src: '02_tesuri_pipe.webp',     title: 'パイプ手摺 施工図',                category: 'handrails' },
+    { id: 6, src: '03_tarapp_catwalk.webp',  title: 'キャットウォーク タラップ',        category: 'ladders' },
+  ];
+
+  // Detect base URL from a card's existing src attribute
+  function getBase(): string {
+    const firstImg = document.querySelector<HTMLImageElement>('#portfolio-grid img');
+    if (!firstImg) return '';
+    const src = firstImg.getAttribute('src') ?? '';
+    // src looks like "/yamazen-hp/portfolio/sample_tarapp.webp"
+    const match = src.match(/^(.*?)\/portfolio\//);
+    return match ? match[1] : '';
+  }
+
+  // ===== Filter logic =====
+  const filterBar = document.getElementById('filter-bar');
+  const grid = document.getElementById('portfolio-grid');
+  const noResults = document.getElementById('no-results');
+
+  let activeFilter = 'all';
+
+  function applyFilter(filter: string) {
+    activeFilter = filter;
+
+    // Update button styles
+    filterBar?.querySelectorAll<HTMLButtonElement>('.filter-btn').forEach((btn) => {
+      const isActive = btn.dataset.filter === filter;
+      btn.classList.toggle('active', isActive);
+    });
+
+    // Show/hide cards
+    let visibleCount = 0;
+    grid?.querySelectorAll<HTMLElement>('.portfolio-card').forEach((card) => {
+      const cat = card.dataset.category ?? '';
+      const visible = filter === 'all' || cat === filter;
+      card.classList.toggle('hidden-card', !visible);
+      if (visible) visibleCount++;
+    });
+
+    if (noResults) noResults.classList.toggle('hidden', visibleCount > 0);
+  }
+
+  filterBar?.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.filter-btn');
+    if (btn && btn.dataset.filter) applyFilter(btn.dataset.filter);
+  });
+
+  // ===== Lightbox logic =====
+  const lightbox = document.getElementById('lightbox') as HTMLElement;
+  const lbImage = document.getElementById('lb-image') as HTMLImageElement;
+  const lbCaption = document.getElementById('lb-caption') as HTMLElement;
+  const lbCounter = document.getElementById('lb-counter') as HTMLElement;
+  const lbClose = document.getElementById('lb-close') as HTMLButtonElement;
+  const lbPrev = document.getElementById('lb-prev') as HTMLButtonElement;
+  const lbNext = document.getElementById('lb-next') as HTMLButtonElement;
+
+  let currentIndex = 0;
+  let visibleItems: typeof ITEMS = [];
+
+  function getVisibleItems(): typeof ITEMS {
+    return activeFilter === 'all'
+      ? ITEMS
+      : ITEMS.filter((item) => item.category === activeFilter);
+  }
+
+  function openLightbox(itemId: number) {
+    visibleItems = getVisibleItems();
+    const pos = visibleItems.findIndex((it) => it.id === itemId);
+    if (pos === -1) return;
+    currentIndex = pos;
+    renderLightbox();
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function renderLightbox() {
+    const item = visibleItems[currentIndex];
+    if (!item) return;
+    const base = getBase();
+    lbImage.src = `${base}/portfolio/${item.src}`;
+    lbImage.alt = item.title;
+    lbCaption.textContent = item.title;
+    lbCounter.textContent = `${currentIndex + 1} / ${visibleItems.length}`;
+    // Arrow visibility
+    lbPrev.style.visibility = currentIndex > 0 ? 'visible' : 'hidden';
+    lbNext.style.visibility = currentIndex < visibleItems.length - 1 ? 'visible' : 'hidden';
+  }
+
+  function showPrev() {
+    if (currentIndex > 0) { currentIndex--; renderLightbox(); }
+  }
+
+  function showNext() {
+    if (currentIndex < visibleItems.length - 1) { currentIndex++; renderLightbox(); }
+  }
+
+  // Open on card click
+  grid?.addEventListener('click', (e) => {
+    const card = (e.target as HTMLElement).closest<HTMLElement>('.portfolio-card');
+    if (!card) return;
+    const idx = parseInt(card.dataset.index ?? '-1', 10);
+    if (idx >= 0) openLightbox(idx);
+  });
+
+  // Keyboard on card
+  grid?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      const card = (e.target as HTMLElement).closest<HTMLElement>('.portfolio-card');
+      if (!card) return;
+      e.preventDefault();
+      const idx = parseInt(card.dataset.index ?? '-1', 10);
+      if (idx >= 0) openLightbox(idx);
+    }
+  });
+
+  // Lightbox controls
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', showPrev);
+  lbNext.addEventListener('click', showNext);
+
+  // Click outside image to close
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') showPrev();
+    if (e.key === 'ArrowRight') showNext();
+  });
+</script>

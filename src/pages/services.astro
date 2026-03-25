@@ -1,0 +1,390 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionDivider from '../components/SectionDivider.astro';
+import CTABanner from '../components/CTABanner.astro';
+import NumberedHeading from '../components/NumberedHeading.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const services = [
+  {
+    id: 'handrails',
+    number: 1,
+    title: '手摺',
+    subtitle: 'HANDRAILS',
+    tags: ['製作手摺', 'SUS手摺', 'パイプ手摺', '階段手摺', '屋上手摺'],
+    description: '建物の安全性と美観を両立する手摺の施工図を作成します。素材・形状・設置場所に応じた最適な図面を提供いたします。',
+    icon: 'handrails',
+  },
+  {
+    id: 'ladders',
+    number: 2,
+    title: 'タラップ',
+    subtitle: 'LADDERS',
+    tags: ['SUSタラップ', 'キャットウォーク'],
+    description: '屋上やメンテナンス用のタラップ・キャットウォークの施工図。安全基準を満たした設計で、施工しやすい図面を作成します。',
+    icon: 'ladders',
+  },
+  {
+    id: 'panels',
+    number: 3,
+    title: 'パネル',
+    subtitle: 'PANELS',
+    tags: ['壁パネル', '天井パネル', '外部パネル', '庇パネル'],
+    description: '各種パネルの割付図・詳細図を作成。寸法精度と取り付け方法を明確にした図面で、現場の施工効率を向上させます。',
+    icon: 'panels',
+  },
+  {
+    id: 'frames',
+    number: 4,
+    title: '三方枠',
+    subtitle: '3-WAY FRAMES',
+    tags: ['EV三方枠', '便所三方枠', '各種付け枠'],
+    description: 'エレベーターや各種開口部の三方枠の詳細図を作成。現場での納まりを確認しやすい図面を提供します。',
+    icon: 'frames',
+  },
+  {
+    id: 'sills',
+    number: 5,
+    title: '面台',
+    subtitle: 'WINDOW SILLS',
+    tags: ['ライニング面台', '配管バック面台'],
+    description: '窓廻りや配管バックの面台施工図。他業種との取り合いを考慮した正確な図面を作成します。',
+    icon: 'sills',
+  },
+  {
+    id: 'special',
+    number: 6,
+    title: '特殊金物',
+    subtitle: 'SPECIAL HARDWARE',
+    tags: ['吊金物', '床見切', '落下防止ストッパー', 'ウォールプロテクター'],
+    description: '特殊な金物の詳細図・製作図。お客様の要望に合わせたオーダーメイドの図面を作成いたします。',
+    icon: 'special',
+  },
+  {
+    id: 'fencing',
+    number: 7,
+    title: '柵・フェンス',
+    subtitle: 'FENCING',
+    tags: ['転落防止柵', '進入防止柵', '衝突防止柵'],
+    description: '安全性が最優先の柵・フェンスの施工図。法規制に準拠した設計を心がけています。',
+    icon: 'fencing',
+  },
+  {
+    id: 'covers',
+    number: 8,
+    title: 'カバー・水切り',
+    subtitle: 'COVERS',
+    tags: ['外部梁化粧カバー', 'ECP水切り', '笠木'],
+    description: '外装の仕上げに関わるカバー・水切り類の詳細図。雨仕舞と美観を両立する図面を作成します。',
+    icon: 'covers',
+  },
+];
+
+// Group services for section dividers: every 2 services gets a divider
+---
+
+<PageLayout
+  title="サービス | 山全金物設計所"
+  description="山全金物設計所が対応可能な建築金物施工図。手摺・タラップ・パネル・三方枠・面台・特殊金物・柵・カバーの8種類。"
+  heroTitle="対応可能な図面"
+  heroSubtitle="SERVICES"
+  heroBgImage="bg/services-bg.webp"
+  breadcrumb={[
+    { label: 'HOME', href: `${base}/` },
+    { label: 'サービス' },
+  ]}
+>
+
+  <!-- Quick anchor nav -->
+  <nav class="sticky top-0 z-40 bg-dark-accent/90 backdrop-blur border-b border-white/5 py-3 px-4 overflow-x-auto">
+    <ul class="flex gap-1 md:gap-2 max-w-6xl mx-auto whitespace-nowrap justify-start md:justify-center">
+      {services.map((s) => (
+        <li>
+          <a
+            href={`#${s.id}`}
+            class="text-xs md:text-sm px-3 py-1.5 rounded-full border border-white/10 text-gray-400
+                   hover:border-steel-blue hover:text-steel-light transition-all duration-200"
+          >
+            <span class="text-metallic-gold font-bold mr-1">:{String(s.number).padStart(2,'0')}</span>
+            {s.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <!-- Services list — all DARK bg, alternating between #141428 and #1c1c38 -->
+  {services.map((service, i) => {
+    const isOdd = i % 2 === 0; // text alignment: index 0,2,4 → text left
+    const bgStyle = Math.floor(i / 2) % 2 === 0
+      ? (i % 2 === 0 ? 'background-color: #141428;' : 'background-color: #1c1c38;')
+      : (i % 2 === 0 ? 'background-color: #1c1c38;' : 'background-color: #141428;');
+
+    return (
+      <>
+        {i > 0 && (
+          <SectionDivider
+            direction={i % 2 === 0 ? 'left' : 'right'}
+            fromColor={i % 2 === 1 ? 'dark-accent' : 'dark-bg'}
+            toColor={i % 2 === 1 ? 'dark-bg' : 'dark-accent'}
+          />
+        )}
+        <section
+          id={service.id}
+          class="py-20 px-4 scroll-mt-24 relative overflow-hidden"
+          style={bgStyle}
+        >
+          {/* Section top gradient line (animated) */}
+          <div class="absolute top-0 left-0 right-0 section-topline"></div>
+          {/* Alternating gradient overlay */}
+          {isOdd
+            ? <div class="absolute top-0 left-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse at top left, rgba(74,111,165,0.06) 0%, transparent 65%);"></div>
+            : <div class="absolute bottom-0 right-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse at bottom right, rgba(196,163,90,0.05) 0%, transparent 65%);"></div>
+          }
+          <div class="max-w-6xl mx-auto relative z-10">
+            <!-- NumberedHeading — always dark mode (lightBg=false) -->
+            <NumberedHeading number={service.number} title={service.title} subtitle={service.subtitle} />
+
+            <!-- Content grid: alternating left/right -->
+            <div class={`mt-10 grid md:grid-cols-2 gap-8 md:gap-16 items-center`}>
+
+              <!-- Text block -->
+              <div class={`${isOdd ? 'md:order-1' : 'md:order-2'} reveal-left space-y-5`}>
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-2">
+                  {service.tags.map((tag) => (
+                    <span class="tag-pill">{tag}</span>
+                  ))}
+                </div>
+                <!-- Description -->
+                <p class="text-base md:text-lg leading-relaxed text-gray-300">
+                  {service.description}
+                </p>
+                <!-- Learn more anchor -->
+                <a
+                  href={`${base}/contact/`}
+                  class="inline-flex items-center gap-2 text-sm transition-colors duration-200 group text-steel-light hover:text-gold-light"
+                >
+                  <span>お問い合わせはこちら</span>
+                  <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </a>
+              </div>
+
+              <!-- SVG Icon visual -->
+              <div class={`${isOdd ? 'md:order-2' : 'md:order-1'} reveal-right flex items-center justify-center`}>
+                <div class="service-icon-wrap">
+                  {service.icon === 'handrails' && (
+                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="service-svg" aria-hidden="true">
+                      <!-- Rail posts -->
+                      <line x1="40" y1="50" x2="40" y2="140" stroke="#4a6fa5" stroke-width="6" stroke-linecap="round"/>
+                      <line x1="100" y1="50" x2="100" y2="140" stroke="#4a6fa5" stroke-width="6" stroke-linecap="round"/>
+                      <line x1="160" y1="50" x2="160" y2="140" stroke="#4a6fa5" stroke-width="6" stroke-linecap="round"/>
+                      <!-- Mid rail -->
+                      <line x1="28" y1="90" x2="172" y2="90" stroke="#6b8fc4" stroke-width="3" stroke-linecap="round"/>
+                      <!-- Top rail -->
+                      <line x1="25" y1="50" x2="175" y2="50" stroke="#c4a35a" stroke-width="8" stroke-linecap="round"/>
+                      <!-- Base plate circles -->
+                      <circle cx="40" cy="140" r="8" fill="#3a5a8a" stroke="#4a6fa5" stroke-width="2"/>
+                      <circle cx="100" cy="140" r="8" fill="#3a5a8a" stroke="#4a6fa5" stroke-width="2"/>
+                      <circle cx="160" cy="140" r="8" fill="#3a5a8a" stroke="#4a6fa5" stroke-width="2"/>
+                      <!-- Glow on top rail -->
+                      <line x1="25" y1="50" x2="175" y2="50" stroke="#e8c87a" stroke-width="2" opacity="0.4"/>
+                    </svg>
+                  )}
+                  {service.icon === 'ladders' && (
+                    <svg viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="service-svg" aria-hidden="true">
+                      <!-- Side rails -->
+                      <line x1="60" y1="20" x2="60" y2="165" stroke="#4a6fa5" stroke-width="8" stroke-linecap="round"/>
+                      <line x1="140" y1="20" x2="140" y2="165" stroke="#4a6fa5" stroke-width="8" stroke-linecap="round"/>
+                      <!-- Rungs -->
+                      <line x1="60" y1="50" x2="140" y2="50" stroke="#c4a35a" stroke-width="5" stroke-linecap="round"/>
+                      <line x1="60" y1="80" x2="140" y2="80" stroke="#c4a35a" stroke-width="5" stroke-linecap="round"/>
+                      <line x1="60" y1="110" x2="140" y2="110" stroke="#c4a35a" stroke-width="5" stroke-linecap="round"/>
+                      <line x1="60" y1="140" x2="140" y2="140" stroke="#c4a35a" stroke-width="5" stroke-linecap="round"/>
+                      <!-- Top hooks -->
+                      <path d="M60 20 Q60 8 72 8" stroke="#6b8fc4" stroke-width="5" stroke-linecap="round" fill="none"/>
+                      <path d="M140 20 Q140 8 128 8" stroke="#6b8fc4" stroke-width="5" stroke-linecap="round" fill="none"/>
+                    </svg>
+                  )}
+                  {service.icon === 'panels' && (
+                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="service-svg" aria-hidden="true">
+                      <!-- Panel grid -->
+                      <rect x="20" y="20" width="72" height="52" rx="3" fill="#16162a" stroke="#4a6fa5" stroke-width="2.5"/>
+                      <rect x="108" y="20" width="72" height="52" rx="3" fill="#16162a" stroke="#4a6fa5" stroke-width="2.5"/>
+                      <rect x="20" y="88" width="72" height="52" rx="3" fill="#16162a" stroke="#4a6fa5" stroke-width="2.5"/>
+                      <rect x="108" y="88" width="72" height="52" rx="3" fill="#16162a" stroke="#4a6fa5" stroke-width="2.5"/>
+                      <!-- Accent lines on panels -->
+                      <line x1="20" y1="46" x2="92" y2="46" stroke="#c4a35a" stroke-width="1" opacity="0.5"/>
+                      <line x1="108" y1="46" x2="180" y2="46" stroke="#c4a35a" stroke-width="1" opacity="0.5"/>
+                      <line x1="20" y1="114" x2="92" y2="114" stroke="#c4a35a" stroke-width="1" opacity="0.5"/>
+                      <line x1="108" y1="114" x2="180" y2="114" stroke="#c4a35a" stroke-width="1" opacity="0.5"/>
+                      <!-- Corner bolts -->
+                      <circle cx="26" cy="26" r="3" fill="#6b8fc4"/>
+                      <circle cx="86" cy="26" r="3" fill="#6b8fc4"/>
+                      <circle cx="114" cy="26" r="3" fill="#6b8fc4"/>
+                      <circle cx="174" cy="26" r="3" fill="#6b8fc4"/>
+                    </svg>
+                  )}
+                  {service.icon === 'frames' && (
+                    <svg viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="service-svg" aria-hidden="true">
+                      <!-- Outer door frame -->
+                      <rect x="50" y="20" width="100" height="145" rx="2" fill="none" stroke="#4a6fa5" stroke-width="12"/>
+                      <!-- Inner reveal cut -->
+                      <rect x="66" y="36" width="68" height="113" rx="1" fill="#0f0f1a" stroke="#6b8fc4" stroke-width="3"/>
+                      <!-- Frame depth indication lines -->
+                      <line x1="50" y1="20" x2="66" y2="36" stroke="#c4a35a" stroke-width="2" opacity="0.7"/>
+                      <line x1="150" y1="20" x2="134" y2="36" stroke="#c4a35a" stroke-width="2" opacity="0.7"/>
+                      <line x1="50" y1="165" x2="66" y2="149" stroke="#c4a35a" stroke-width="2" opacity="0.7"/>
+                      <line x1="150" y1="165" x2="134" y2="149" stroke="#c4a35a" stroke-width="2" opacity="0.7"/>
+                    </svg>
+                  )}
+                  {service.icon === 'sills' && (
+                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="service-svg" aria-hidden="true">
+                      <!-- Window frame -->
+                      <rect x="30" y="20" width="140" height="95" rx="2" fill="none" stroke="#4a6fa5" stroke-width="5"/>
+                      <!-- Window pane divider -->
+                      <line x1="100" y1="20" x2="100" y2="115" stroke="#6b8fc4" stroke-width="3"/>
+                      <line x1="30" y1="67" x2="170" y2="67" stroke="#6b8fc4" stroke-width="3"/>
+                      <!-- Sill projection -->
+                      <rect x="20" y="115" width="160" height="14" rx="2" fill="#16162a" stroke="#c4a35a" stroke-width="2.5"/>
+                      <rect x="25" y="129" width="150" height="8" rx="1" fill="#16162a" stroke="#4a6fa5" stroke-width="1.5"/>
+                      <!-- Sill depth sides -->
+                      <line x1="20" y1="115" x2="20" y2="137" stroke="#c4a35a" stroke-width="2"/>
+                      <line x1="180" y1="115" x2="180" y2="137" stroke="#c4a35a" stroke-width="2"/>
+                    </svg>
+                  )}
+                  {service.icon === 'special' && (
+                    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="service-svg" aria-hidden="true">
+                      <!-- Large gear outer ring -->
+                      <circle cx="100" cy="100" r="60" fill="none" stroke="#4a6fa5" stroke-width="5" stroke-dasharray="8 4"/>
+                      <!-- Gear inner ring -->
+                      <circle cx="100" cy="100" r="35" fill="#16162a" stroke="#6b8fc4" stroke-width="4"/>
+                      <!-- Center -->
+                      <circle cx="100" cy="100" r="12" fill="#4a6fa5" stroke="#c4a35a" stroke-width="2.5"/>
+                      <!-- Gear teeth (8 teeth) -->
+                      {[0,45,90,135,180,225,270,315].map((deg) => {
+                        const rad = (deg * Math.PI) / 180;
+                        const x1 = 100 + 60 * Math.cos(rad);
+                        const y1 = 100 + 60 * Math.sin(rad);
+                        const x2 = 100 + 76 * Math.cos(rad);
+                        const y2 = 100 + 76 * Math.sin(rad);
+                        return <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#c4a35a" stroke-width="8" stroke-linecap="round"/>;
+                      })}
+                    </svg>
+                  )}
+                  {service.icon === 'fencing' && (
+                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="service-svg" aria-hidden="true">
+                      <!-- Fence posts -->
+                      <rect x="18" y="30" width="12" height="110" rx="3" fill="#3a5a8a" stroke="#4a6fa5" stroke-width="2"/>
+                      <rect x="58" y="30" width="12" height="110" rx="3" fill="#3a5a8a" stroke="#4a6fa5" stroke-width="2"/>
+                      <rect x="98" y="30" width="12" height="110" rx="3" fill="#3a5a8a" stroke="#4a6fa5" stroke-width="2"/>
+                      <rect x="138" y="30" width="12" height="110" rx="3" fill="#3a5a8a" stroke="#4a6fa5" stroke-width="2"/>
+                      <rect x="170" y="30" width="12" height="110" rx="3" fill="#3a5a8a" stroke="#4a6fa5" stroke-width="2"/>
+                      <!-- Rails -->
+                      <line x1="15" y1="60" x2="185" y2="60" stroke="#c4a35a" stroke-width="5" stroke-linecap="round"/>
+                      <line x1="15" y1="100" x2="185" y2="100" stroke="#c4a35a" stroke-width="5" stroke-linecap="round"/>
+                      <!-- Top caps -->
+                      <rect x="16" y="26" width="16" height="7" rx="2" fill="#6b8fc4"/>
+                      <rect x="56" y="26" width="16" height="7" rx="2" fill="#6b8fc4"/>
+                      <rect x="96" y="26" width="16" height="7" rx="2" fill="#6b8fc4"/>
+                      <rect x="136" y="26" width="16" height="7" rx="2" fill="#6b8fc4"/>
+                      <rect x="168" y="26" width="16" height="7" rx="2" fill="#6b8fc4"/>
+                    </svg>
+                  )}
+                  {service.icon === 'covers' && (
+                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" class="service-svg" aria-hidden="true">
+                      <!-- Coping/kasagi profile -->
+                      <path d="M20 80 L20 100 L180 100 L180 80 Q180 60 100 55 Q20 60 20 80Z"
+                        fill="#16162a" stroke="#4a6fa5" stroke-width="3" stroke-linejoin="round"/>
+                      <!-- Top cap surface highlight -->
+                      <path d="M25 78 Q100 58 175 78" fill="none" stroke="#c4a35a" stroke-width="3" stroke-linecap="round"/>
+                      <!-- Drip edge detail -->
+                      <line x1="20" y1="100" x2="15" y2="108" stroke="#6b8fc4" stroke-width="3" stroke-linecap="round"/>
+                      <line x1="180" y1="100" x2="185" y2="108" stroke="#6b8fc4" stroke-width="3" stroke-linecap="round"/>
+                      <!-- Wall body -->
+                      <rect x="30" y="100" width="140" height="40" fill="#0f0f1a" stroke="#3a5a8a" stroke-width="2"/>
+                      <!-- Dimension annotation dots -->
+                      <circle cx="20" cy="78" r="3" fill="#e8c87a"/>
+                      <circle cx="180" cy="78" r="3" fill="#e8c87a"/>
+                      <!-- Depth annotation -->
+                      <line x1="20" y1="118" x2="30" y2="118" stroke="#c4a35a" stroke-width="1.5" stroke-dasharray="3 2"/>
+                    </svg>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  })}
+
+  <SectionDivider direction="right" fromColor="dark-accent" toColor="dark-accent" />
+
+  <!-- CTA -->
+  <div class="bg-dark-accent pb-4">
+    <CTABanner
+      title="図面のご依頼・ご相談はお気軽に"
+      description="手摺・タラップ・パネルなど、建築金物施工図のご依頼を承ります。まずはお気軽にお問い合わせください。"
+      buttonText="お問い合わせ"
+      buttonHref="/contact/"
+    />
+  </div>
+
+</PageLayout>
+
+<style>
+  .tag-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    background: rgba(74, 111, 165, 0.15);
+    border: 1px solid rgba(74, 111, 165, 0.4);
+    color: #6b8fc4;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .tag-pill:hover {
+    background: rgba(196, 163, 90, 0.12);
+    border-color: rgba(196, 163, 90, 0.45);
+    color: #c4a35a;
+  }
+
+  .service-icon-wrap {
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(135deg, rgba(30,30,60,0.9) 0%, rgba(26,26,48,0.9) 100%);
+    border: 1px solid rgba(74,111,165,0.35);
+    border-radius: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem;
+    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 30px rgba(196, 163, 90, 0.08);
+  }
+
+  .service-icon-wrap:hover {
+    border-color: rgba(196, 163, 90, 0.3);
+    background: linear-gradient(135deg, rgba(74,111,165,0.14) 0%, rgba(196,163,90,0.09) 100%);
+    box-shadow: 0 0 40px rgba(196, 163, 90, 0.18);
+  }
+
+  .service-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* text-gold-light fallback for inline links */
+  .hover\:text-gold-light:hover {
+    color: #e8c87a;
+  }
+</style>

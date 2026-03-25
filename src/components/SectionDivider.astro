@@ -1,0 +1,53 @@
+---
+interface Props {
+  direction?: 'left' | 'right';
+  fromColor?: string;
+  toColor?: string;
+}
+
+const {
+  direction = 'right',
+  fromColor = 'dark-bg',
+  toColor = 'dark-accent',
+} = Astro.props;
+
+// Map friendly names to actual hex values
+const colorMap: Record<string, string> = {
+  'dark-bg': '#1a1a2e',
+  'dark-accent': '#0f0f1a',
+  'dark-surface': '#16162a',
+  'steel-blue': '#4a6fa5',
+  'steel-dim': '#3a5a8a',
+  'metallic-gold': '#c4a35a',
+};
+
+const from = colorMap[fromColor] ?? fromColor;
+const to = colorMap[toColor] ?? toColor;
+
+// Polygon points: full-width rect with diagonal cut
+// direction 'right': bottom-left raised, bottom-right at base
+// direction 'left': bottom-left at base, bottom-right raised
+const points = direction === 'right'
+  ? '0,0 100,0 100,100 0,0'   // right-slanting diagonal
+  : '0,0 100,0 100,0 0,100';  // left-slanting diagonal
+
+// We use a viewBox of "0 0 100 100" with preserveAspectRatio none for clean fills
+---
+
+<div class="section-divider" aria-hidden="true">
+  {direction === 'right' ? (
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1440" height="100" fill={from} />
+      <polygon points="0,0 1440,0 1440,100" fill={to} />
+      <!-- Gold accent line along the diagonal edge -->
+      <line x1="0" y1="0" x2="1440" y2="100" stroke="#c4a35a" stroke-width="1.5" opacity="0.35" />
+    </svg>
+  ) : (
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="1440" height="100" fill={from} />
+      <polygon points="0,100 1440,0 1440,100" fill={to} />
+      <!-- Gold accent line along the diagonal edge -->
+      <line x1="0" y1="100" x2="1440" y2="0" stroke="#c4a35a" stroke-width="1.5" opacity="0.35" />
+    </svg>
+  )}
+</div>

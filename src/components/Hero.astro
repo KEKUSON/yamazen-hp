@@ -2,9 +2,17 @@
 const base = import.meta.env.BASE_URL;
 ---
 
-<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark-accent">
-  <!-- Layer 0: Background image -->
-  <div class="hero-bg absolute inset-0" style={`background-image: url('${base}/bg/hero-bg.webp')`}></div>
+<section id="hero" class="section-framed relative min-h-screen flex items-center justify-center overflow-hidden bg-dark-accent">
+  <!-- Layer 0: Rotating background slideshow -->
+  <div class="hero-slideshow absolute inset-0">
+    <div class="hero-slide" style={`background-image: url('${base}/bg/hero-bg.webp')`}></div>
+    <div class="hero-slide" style={`background-image: url('${base}/bg/building-government.webp')`}></div>
+    <div class="hero-slide" style={`background-image: url('${base}/bg/building-apartment.webp')`}></div>
+    <div class="hero-slide" style={`background-image: url('${base}/bg/building-commercial.webp')`}></div>
+  </div>
+
+  <!-- Layer 0b: Gradient overlay — dark at bottom (where text is), transparent at top (photo shines through) -->
+  <div class="absolute inset-0 bg-gradient-to-t from-[#0d0d1a] via-[#0d0d1a]/60 to-transparent z-[1]"></div>
 
   <!-- Layer 1: Animated CAD grid (CSS repeating-linear-gradient, NOT SVG) -->
   <div class="hero-grid" aria-hidden="true"></div>
@@ -20,6 +28,9 @@ const base = import.meta.env.BASE_URL;
   <!-- Layer 3: Radial glow pulse -->
   <div class="hero-glow" aria-hidden="true"></div>
 
+  <!-- Layer 4: Mouse-follow cursor glow -->
+  <div class="hero-cursor-glow" id="hero-glow" aria-hidden="true"></div>
+
   <!-- Content with staggered entrance -->
   <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
     <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight hero-title" style="opacity:0">
@@ -32,17 +43,25 @@ const base = import.meta.env.BASE_URL;
       10年の実績 — 官公庁施設から集合住宅まで
     </p>
     <div class="flex flex-col sm:flex-row gap-4 justify-center hero-cta" style="opacity:0">
-      <a href="#contact" class="cta-primary inline-block px-8 py-4 bg-steel-blue hover:bg-steel-light text-white font-medium rounded transition-all duration-300">
+      <a href={`${base}/contact/`} class="cta-primary inline-block px-8 py-4 bg-steel-blue hover:bg-steel-light text-white font-medium rounded transition-all duration-300">
         お問い合わせ
       </a>
-      <a href="#portfolio" class="cta-secondary inline-block px-8 py-4 border-2 border-metallic-gold text-metallic-gold hover:bg-metallic-gold hover:text-dark-bg font-medium rounded transition-all duration-300">
+      <a href={`${base}/portfolio/`} class="cta-secondary inline-block px-8 py-4 border-2 border-metallic-gold text-metallic-gold hover:bg-metallic-gold hover:text-dark-bg font-medium rounded transition-all duration-300">
         施工図サンプル
       </a>
     </div>
   </div>
 
+  <!-- Slide indicator dots -->
+  <div class="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+    <span class="slide-dot w-2 h-2 rounded-full bg-white/30"></span>
+    <span class="slide-dot w-2 h-2 rounded-full bg-white/30"></span>
+    <span class="slide-dot w-2 h-2 rounded-full bg-white/30"></span>
+    <span class="slide-dot w-2 h-2 rounded-full bg-white/30"></span>
+  </div>
+
   <!-- Scroll indicator -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-20">
     <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
     </svg>
@@ -50,22 +69,60 @@ const base = import.meta.env.BASE_URL;
 </section>
 
 <style>
-  /* Background image layer */
-  .hero-bg {
+  /* Slideshow container */
+  .hero-slideshow {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Individual slides — crossfade animation */
+  .hero-slide {
+    position: absolute;
+    inset: 0;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.25;
-    filter: brightness(0.6);
+    opacity: 0;
+    filter: brightness(0.85) saturate(1.1);
+    animation: hero-crossfade 24s ease-in-out infinite;
+  }
+  .hero-slide:nth-child(1) { animation-delay: 0s; }
+  .hero-slide:nth-child(2) { animation-delay: 6s; }
+  .hero-slide:nth-child(3) { animation-delay: 12s; }
+  .hero-slide:nth-child(4) { animation-delay: 18s; }
+
+  @keyframes hero-crossfade {
+    0%   { opacity: 0; }
+    4%   { opacity: 0.75; }
+    25%  { opacity: 0.75; }
+    29%  { opacity: 0; }
+    100% { opacity: 0; }
   }
 
-  /* Animated CAD grid */
+  /* Slide indicator dots */
+  .slide-dot {
+    transition: background-color 0.5s ease;
+  }
+  .slide-dot:nth-child(1) { animation: dot-pulse 24s ease-in-out infinite 0s; }
+  .slide-dot:nth-child(2) { animation: dot-pulse 24s ease-in-out infinite 6s; }
+  .slide-dot:nth-child(3) { animation: dot-pulse 24s ease-in-out infinite 12s; }
+  .slide-dot:nth-child(4) { animation: dot-pulse 24s ease-in-out infinite 18s; }
+
+  @keyframes dot-pulse {
+    0%   { background-color: rgba(255,255,255,0.3); }
+    4%   { background-color: rgba(196,163,90,0.9); }
+    25%  { background-color: rgba(196,163,90,0.9); }
+    29%  { background-color: rgba(255,255,255,0.3); }
+    100% { background-color: rgba(255,255,255,0.3); }
+  }
+
+  /* Animated CAD grid — reduced opacity so it doesn't fight the photo */
   .hero-grid {
     position: absolute;
     inset: 0;
     background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(74,111,165,0.08) 39px, rgba(74,111,165,0.08) 40px),
-      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(74,111,165,0.08) 39px, rgba(74,111,165,0.08) 40px);
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(74,111,165,0.10) 39px, rgba(74,111,165,0.10) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(74,111,165,0.10) 39px, rgba(74,111,165,0.10) 40px);
     background-size: 40px 40px;
     animation: grid-drift 20s linear infinite;
   }
@@ -74,8 +131,8 @@ const base = import.meta.env.BASE_URL;
     position: absolute;
     inset: 0;
     background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 199px, rgba(74,111,165,0.14) 199px, rgba(74,111,165,0.14) 200px),
-      repeating-linear-gradient(90deg, transparent, transparent 199px, rgba(74,111,165,0.14) 199px, rgba(74,111,165,0.14) 200px);
+      repeating-linear-gradient(0deg, transparent, transparent 199px, rgba(74,111,165,0.16) 199px, rgba(74,111,165,0.16) 200px),
+      repeating-linear-gradient(90deg, transparent, transparent 199px, rgba(74,111,165,0.16) 199px, rgba(74,111,165,0.16) 200px);
     background-size: 200px 200px;
     animation: grid-drift 20s linear infinite;
   }
@@ -153,6 +210,7 @@ const base = import.meta.env.BASE_URL;
   /* CTA glow on hover */
   .cta-primary {
     position: relative;
+    overflow: visible;
     transition: box-shadow 0.3s ease, transform 0.2s ease;
   }
   .cta-primary:hover {
@@ -160,10 +218,64 @@ const base = import.meta.env.BASE_URL;
     transform: translateY(-2px);
   }
   .cta-secondary {
+    position: relative;
+    overflow: visible;
     transition: box-shadow 0.3s ease, transform 0.2s ease, background-color 0.3s ease, color 0.3s ease;
   }
   .cta-secondary:hover {
     box-shadow: 0 0 20px rgba(196,163,90,0.4), 0 0 40px rgba(196,163,90,0.15);
     transform: translateY(-2px);
   }
+
+  /* CTA ring-expand ripple */
+  .cta-primary::after,
+  .cta-secondary::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    border: 2px solid currentColor;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .cta-primary:hover::after {
+    animation: ring-expand 0.6s ease-out;
+  }
+  .cta-secondary:hover::after {
+    animation: ring-expand 0.6s ease-out;
+  }
+  @keyframes ring-expand {
+    0%   { transform: scale(1);    opacity: 0.6; }
+    100% { transform: scale(1.15); opacity: 0; }
+  }
+
+  /* Mouse-follow cursor glow */
+  .hero-cursor-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,111,165,0.2) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 5;
+  }
 </style>
+
+<script>
+  const heroEl = document.getElementById('hero');
+  const glowEl = document.getElementById('hero-glow');
+  if (heroEl && glowEl) {
+    heroEl.addEventListener('mousemove', (e) => {
+      const rect = heroEl.getBoundingClientRect();
+      (glowEl as HTMLElement).style.left = (e.clientX - rect.left) + 'px';
+      (glowEl as HTMLElement).style.top = (e.clientY - rect.top) + 'px';
+      (glowEl as HTMLElement).style.opacity = '1';
+    });
+    heroEl.addEventListener('mouseleave', () => {
+      (glowEl as HTMLElement).style.opacity = '0';
+    });
+  }
+</script>

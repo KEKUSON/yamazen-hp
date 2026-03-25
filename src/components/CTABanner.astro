@@ -1,0 +1,86 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  buttonText: string;
+  buttonHref: string;
+}
+
+const { title, description, buttonText, buttonHref } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+// Resolve the href: if it starts with / and not http, prefix with base
+const resolvedHref = buttonHref.startsWith('http') ? buttonHref : `${base}${buttonHref}`;
+---
+
+<section class="cta-banner py-16 px-4 reveal">
+  <div class="max-w-4xl mx-auto">
+    <div class="cta-banner-inner rounded-xl p-8 md:p-12 text-center relative overflow-hidden">
+      <!-- Subtle shine overlay for depth on bright background -->
+      <div class="absolute inset-0 rounded-xl opacity-30" style="background: radial-gradient(ellipse at top center, rgba(255,255,255,0.25) 0%, transparent 65%);"></div>
+
+      <!-- Content -->
+      <div class="relative z-10">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 gradient-text">{title}</h2>
+        <p class="text-gray-300 text-base md:text-lg mb-8 max-w-2xl mx-auto leading-relaxed">{description}</p>
+        <a
+          href={resolvedHref}
+          class="cta-btn inline-flex items-center gap-2 px-8 py-4
+                 font-bold rounded-lg
+                 transition-all duration-300 text-base"
+          style="color: #4a6fa5;"
+        >
+          {buttonText}
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-banner-inner {
+    background: linear-gradient(135deg, #3a5a8a 0%, #4a6fa5 40%, #6b8fc4 70%, rgba(196,163,90,0.3) 100%);
+    border: none;
+    box-shadow: 0 8px 40px rgba(74,111,165,0.45), 0 2px 0 rgba(255,255,255,0.15) inset;
+  }
+
+  .cta-banner-inner:hover {
+    box-shadow: 0 12px 50px rgba(74,111,165,0.55);
+    transition: box-shadow 0.3s ease;
+  }
+
+  /* Override gradient-text on bright background — use white instead */
+  .cta-banner-inner .gradient-text {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: white !important;
+    color: white !important;
+  }
+
+  /* Override description text color on bright background */
+  .cta-banner-inner p.text-gray-300 {
+    color: rgba(255, 255, 255, 0.88) !important;
+  }
+
+  .cta-btn {
+    background: white;
+    color: #4a6fa5;
+    font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+
+  .cta-btn:hover {
+    background: #f0f4fa;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+    transform: translateY(-2px);
+  }
+
+  /* Arrow icon in button should be steel-blue */
+  .cta-btn svg {
+    color: #4a6fa5;
+  }
+</style>

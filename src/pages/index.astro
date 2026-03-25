@@ -2,13 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Services from '../components/Services.astro';
-import Portfolio from '../components/Portfolio.astro';
-import Pricing from '../components/Pricing.astro';
-import Workflow from '../components/Workflow.astro';
-import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import SectionDivider from '../components/SectionDivider.astro';
+import CTABanner from '../components/CTABanner.astro';
+import ParallaxBreak from '../components/ParallaxBreak.astro';
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout
@@ -16,12 +15,396 @@ import Footer from '../components/Footer.astro';
   description="建築金物施工図の設計・作図を行う山全金物設計所。10年の実績、官公庁施設から集合住宅まで対応。JWW/AutoCAD対応。"
 >
   <Navbar />
+
+  <!-- Section 1: Hero -->
   <Hero />
-  <About />
-  <Services />
-  <Portfolio />
-  <Pricing />
-  <Workflow />
-  <Contact />
+
+  <!-- Divider: dark-accent → dark-mid (hero is dark-accent, strength section is dark-mid) -->
+  <SectionDivider direction="right" fromColor="dark-accent" toColor="dark-accent" />
+
+  <!-- Section 2: Strength Highlights -->
+  <section class="section-framed py-20 px-4 relative overflow-hidden" style="background-color: #141428;">
+    <!-- Section top gradient line (animated) -->
+    <div class="absolute top-0 left-0 right-0 section-topline"></div>
+    <!-- Gold radial overlay top-left -->
+    <div class="absolute top-0 left-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse at top left, rgba(196,163,90,0.06) 0%, transparent 65%);"></div>
+    <div class="max-w-7xl mx-auto relative z-10">
+      <!-- Section header — left-aligned with large background number -->
+      <div class="flex items-end gap-6 mb-14 reveal border-b border-steel-blue/20 pb-8">
+        <span class="text-8xl font-bold leading-none" style="color: rgba(74,111,165,0.15);">01</span>
+        <div>
+          <p class="text-steel-blue text-xs tracking-[0.3em] uppercase font-medium mb-1">STRENGTH</p>
+          <h2 class="text-4xl font-bold"><span class="gradient-text">山全の強み</span></h2>
+        </div>
+      </div>
+
+      <!-- 3 highlight cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 reveal-stagger">
+
+        <!-- :01 コスト優位性 -->
+        <div class="strength-card gradient-border group p-6 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden" style="background-color: #242448; box-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+               style="background: radial-gradient(ellipse at top left, rgba(74,111,165,0.06) 0%, transparent 70%);"></div>
+          <div class="relative z-10">
+            <!-- Icon -->
+            <div class="mb-4 w-12 h-12 rounded-lg flex items-center justify-center"
+                 style="background: rgba(196,163,90,0.1); border: 1px solid rgba(196,163,90,0.25);">
+              <svg class="w-6 h-6 text-metallic-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 0v2m0 18v-2M2 12h2m18 0h-2" />
+              </svg>
+            </div>
+            <!-- Number + title -->
+            <div class="flex items-baseline gap-2 mb-2">
+              <span class="card-number text-5xl font-bold leading-none" style="background: linear-gradient(135deg, #8a6e35, #c4a35a, #e8c87a); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">:01</span>
+              <h3 class="text-lg font-bold text-white">コスト優位性</h3>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">海外拠点による低コスト作図で、品質を落とさず予算を抑えた施工図を提供します。</p>
+          </div>
+        </div>
+
+        <!-- :02 両CAD対応 -->
+        <div class="strength-card gradient-border group p-6 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden" style="background-color: #242448; box-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+               style="background: radial-gradient(ellipse at top left, rgba(74,111,165,0.06) 0%, transparent 70%);"></div>
+          <div class="relative z-10">
+            <div class="mb-4 w-12 h-12 rounded-lg flex items-center justify-center"
+                 style="background: rgba(196,163,90,0.1); border: 1px solid rgba(196,163,90,0.25);">
+              <svg class="w-6 h-6 text-metallic-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div class="flex items-baseline gap-2 mb-2">
+              <span class="card-number text-5xl font-bold leading-none" style="background: linear-gradient(135deg, #8a6e35, #c4a35a, #e8c87a); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">:02</span>
+              <h3 class="text-lg font-bold text-white">両CAD対応</h3>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">JWW / AutoCAD の両方に対応。お客様のCAD環境に合わせたデータ形式で納品します。</p>
+          </div>
+        </div>
+
+        <!-- :03 10年の実績 -->
+        <div class="strength-card gradient-border group p-6 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden" style="background-color: #242448; box-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+               style="background: radial-gradient(ellipse at top left, rgba(74,111,165,0.06) 0%, transparent 70%);"></div>
+          <div class="relative z-10">
+            <div class="mb-4 w-12 h-12 rounded-lg flex items-center justify-center"
+                 style="background: rgba(196,163,90,0.1); border: 1px solid rgba(196,163,90,0.25);">
+              <svg class="w-6 h-6 text-metallic-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <div class="flex items-baseline gap-2 mb-2">
+              <span class="card-number text-5xl font-bold leading-none" style="background: linear-gradient(135deg, #8a6e35, #c4a35a, #e8c87a); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">:03</span>
+              <h3 class="text-lg font-bold text-white">10年の実績</h3>
+            </div>
+            <p class="text-gray-400 text-sm leading-relaxed">官公庁〜集合住宅まで多様な建築物に対応。2016年より積み上げた信頼と経験。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- More link -->
+      <div class="text-center reveal">
+        <a
+          href={`${base}/strength/`}
+          class="inline-flex items-center gap-2 text-metallic-gold hover:text-gold-light transition-colors duration-200 text-sm font-medium group"
+        >
+          もっと見る
+          <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parallax break: between Strength and Services -->
+  <ParallaxBreak
+    image="bg/building-government.webp"
+    alt="官公庁施設"
+    overlayText="官公庁施設から集合住宅まで"
+    overlaySubtext="多種多様な建築物の施工図を手がけています"
+  />
+
+  <!-- Divider: dark-accent → dark-bg (transition to services section) -->
+  <SectionDivider direction="left" fromColor="dark-accent" toColor="dark-bg" />
+
+  <!-- Section 3: Services Preview — DARK background -->
+  <section class="py-20 px-4 relative overflow-hidden" style="background-color: #1c1c38;">
+    <!-- Section top gradient line (animated) -->
+    <div class="absolute top-0 left-0 right-0 section-topline"></div>
+    <!-- Blue radial overlay bottom-right -->
+    <div class="absolute bottom-0 right-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse at bottom right, rgba(74,111,165,0.06) 0%, transparent 65%);"></div>
+    <div class="max-w-7xl mx-auto relative z-10">
+      <!-- Section header — left-aligned with large background number -->
+      <div class="flex items-end gap-6 mb-14 reveal border-b border-steel-blue/20 pb-8">
+        <span class="text-8xl font-bold leading-none" style="color: rgba(74,111,165,0.15);">02</span>
+        <div>
+          <p class="text-steel-blue text-xs tracking-[0.3em] uppercase font-medium mb-1">SERVICES</p>
+          <h2 class="text-4xl font-bold"><span class="gradient-text">対応可能な図面</span></h2>
+        </div>
+      </div>
+
+      <!-- 4 service cards — dark cards on dark bg -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10 reveal-stagger">
+
+        <!-- 手摺 -->
+        <div class="service-card group rounded-xl p-6 hover:-translate-y-1 transition-all duration-300 text-center relative overflow-hidden" style="background-color: #242448; border: 1px solid rgba(74,111,165,0.25); border-left: 4px solid #c4a35a; box-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+               style="background: radial-gradient(ellipse at center, rgba(74,111,165,0.06) 0%, transparent 70%);"></div>
+          <div class="relative z-10">
+            <div class="mx-auto mb-4 w-14 h-14 rounded-full flex items-center justify-center"
+                 style="background: rgba(196,163,90,0.1); border: 1px solid rgba(196,163,90,0.25);">
+              <svg class="w-7 h-7 text-metallic-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M4 6h16M4 6v12M20 6v12M4 18h16M8 6v12M16 6v12" />
+              </svg>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">手摺</h3>
+            <p class="text-xs tracking-widest uppercase mb-3 text-gray-500">HANDRAIL</p>
+            <p class="text-sm leading-relaxed text-gray-400">屋上・階段・廊下の手摺施工図。各種仕様に対応した詳細図を作成。</p>
+          </div>
+        </div>
+
+        <!-- タラップ -->
+        <div class="service-card group rounded-xl p-6 hover:-translate-y-1 transition-all duration-300 text-center relative overflow-hidden" style="background-color: #242448; border: 1px solid rgba(74,111,165,0.25); border-left: 4px solid #c4a35a; box-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+               style="background: radial-gradient(ellipse at center, rgba(74,111,165,0.06) 0%, transparent 70%);"></div>
+          <div class="relative z-10">
+            <div class="mx-auto mb-4 w-14 h-14 rounded-full flex items-center justify-center"
+                 style="background: rgba(196,163,90,0.1); border: 1px solid rgba(196,163,90,0.25);">
+              <svg class="w-7 h-7 text-metallic-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M3 6h18M3 12h18M3 18h18M7 3v18M17 3v18" />
+              </svg>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">タラップ</h3>
+            <p class="text-xs tracking-widest uppercase mb-3 text-gray-500">TARAPP</p>
+            <p class="text-sm leading-relaxed text-gray-400">屋上・キャットウォーク用タラップ。安全基準を踏まえた施工図面を提供。</p>
+          </div>
+        </div>
+
+        <!-- パネル -->
+        <div class="service-card group rounded-xl p-6 hover:-translate-y-1 transition-all duration-300 text-center relative overflow-hidden" style="background-color: #242448; border: 1px solid rgba(74,111,165,0.25); border-left: 4px solid #c4a35a; box-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+               style="background: radial-gradient(ellipse at center, rgba(74,111,165,0.06) 0%, transparent 70%);"></div>
+          <div class="relative z-10">
+            <div class="mx-auto mb-4 w-14 h-14 rounded-full flex items-center justify-center"
+                 style="background: rgba(196,163,90,0.1); border: 1px solid rgba(196,163,90,0.25);">
+              <svg class="w-7 h-7 text-metallic-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M4 4h16v16H4z M4 10h16 M10 4v16" />
+              </svg>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">パネル</h3>
+            <p class="text-xs tracking-widest uppercase mb-3 text-gray-500">PANEL</p>
+            <p class="text-sm leading-relaxed text-gray-400">三方枠・パネル取付け施工図。建具周辺金物の詳細設計に対応。</p>
+          </div>
+        </div>
+
+        <!-- 特殊金物 -->
+        <div class="service-card group rounded-xl p-6 hover:-translate-y-1 transition-all duration-300 text-center relative overflow-hidden" style="background-color: #242448; border: 1px solid rgba(74,111,165,0.25); border-left: 4px solid #c4a35a; box-shadow: 0 2px 12px rgba(0,0,0,0.5);">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+               style="background: radial-gradient(ellipse at center, rgba(74,111,165,0.06) 0%, transparent 70%);"></div>
+          <div class="relative z-10">
+            <div class="mx-auto mb-4 w-14 h-14 rounded-full flex items-center justify-center"
+                 style="background: rgba(196,163,90,0.1); border: 1px solid rgba(196,163,90,0.25);">
+              <svg class="w-7 h-7 text-metallic-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <h3 class="text-base font-bold text-white mb-1">特殊金物</h3>
+            <p class="text-xs tracking-widest uppercase mb-3 text-gray-500">SPECIAL</p>
+            <p class="text-sm leading-relaxed text-gray-400">床目切り・ストッパー等の特殊金物。オーダーメイド対応の施工図を作成。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- More link -->
+      <div class="text-center reveal">
+        <a
+          href={`${base}/services/`}
+          class="inline-flex items-center gap-2 text-metallic-gold hover:text-gold-light transition-colors duration-200 text-sm font-medium group"
+        >
+          すべてのサービス
+          <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parallax break: between Services and Portfolio -->
+  <ParallaxBreak
+    image="bg/building-apartment.webp"
+    alt="集合住宅"
+    height="350px"
+    overlayText="確かな品質、柔軟な対応"
+  />
+
+  <!-- Divider: dark-bg → dark-accent (transition to portfolio section) -->
+  <SectionDivider direction="right" fromColor="dark-bg" toColor="dark-accent" />
+
+  <!-- Section 4: Portfolio Preview -->
+  <section class="py-20 px-4 relative overflow-hidden" style="background-color: #141428;">
+    <!-- Section top gradient line (animated) -->
+    <div class="absolute top-0 left-0 right-0 section-topline"></div>
+    <!-- Gold radial overlay top-right -->
+    <div class="absolute top-0 right-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse at top right, rgba(196,163,90,0.06) 0%, transparent 65%);"></div>
+    <div class="max-w-7xl mx-auto relative z-10">
+      <!-- Section header — left-aligned with large background number -->
+      <div class="flex items-end gap-6 mb-14 reveal border-b border-steel-blue/20 pb-8">
+        <span class="text-8xl font-bold leading-none" style="color: rgba(74,111,165,0.15);">03</span>
+        <div>
+          <p class="text-steel-blue text-xs tracking-[0.3em] uppercase font-medium mb-1">WORKS</p>
+          <h2 class="text-4xl font-bold"><span class="gradient-text">作図実績</span></h2>
+        </div>
+      </div>
+
+      <!-- Portfolio grid — with gold frame wrapper -->
+      <div class="rounded-2xl p-1 mb-10" style="background: rgba(196,163,90,0.08);">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 reveal-stagger">
+
+        <!-- Image 1: SUSタラップ詳細図 -->
+        <a
+          href={`${base}/portfolio/`}
+          class="portfolio-item group relative rounded-xl overflow-hidden aspect-square block hover:shadow-[0_8px_32px_rgba(196,163,90,0.25)] transition-all duration-300"
+          style="border: 1px solid rgba(196,163,90,0.3);"
+          aria-label="作図実績: SUSタラップ詳細図"
+        >
+          <img
+            src={`${base}/portfolio/sample_tarapp.webp`}
+            alt="SUSタラップ 平面詳細図"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="portfolio-overlay absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-white text-sm font-medium">SUSタラップ詳細図</span>
+          </div>
+        </a>
+
+        <!-- Image 2: 落下防止ストッパー -->
+        <a
+          href={`${base}/portfolio/`}
+          class="portfolio-item group relative rounded-xl overflow-hidden aspect-square block hover:shadow-[0_8px_32px_rgba(196,163,90,0.25)] transition-all duration-300"
+          style="border: 1px solid rgba(196,163,90,0.3);"
+          aria-label="作図実績: 落下防止ストッパー詳細図"
+        >
+          <img
+            src={`${base}/portfolio/08_stopper.webp`}
+            alt="落下防止ストッパー 詳細図"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="portfolio-overlay absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-white text-sm font-medium">ストッパー詳細図</span>
+          </div>
+        </a>
+
+        <!-- Image 3: 手摺（屋上） -->
+        <a
+          href={`${base}/portfolio/`}
+          class="portfolio-item group relative rounded-xl overflow-hidden aspect-square block hover:shadow-[0_8px_32px_rgba(196,163,90,0.25)] transition-all duration-300"
+          style="border: 1px solid rgba(196,163,90,0.3);"
+          aria-label="作図実績: 手摺（屋上）"
+        >
+          <img
+            src={`${base}/portfolio/01_tesuri_okujo.webp`}
+            alt="屋上手摺 施工図"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="portfolio-overlay absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-white text-sm font-medium">手摺（屋上）</span>
+          </div>
+        </a>
+
+        <!-- Image 4: 床見切り詳細図 -->
+        <a
+          href={`${base}/portfolio/`}
+          class="portfolio-item group relative rounded-xl overflow-hidden aspect-square block hover:shadow-[0_8px_32px_rgba(196,163,90,0.25)] transition-all duration-300"
+          style="border: 1px solid rgba(196,163,90,0.3);"
+          aria-label="作図実績: 床見切り詳細図"
+        >
+          <img
+            src={`${base}/portfolio/07_yukamikiri.webp`}
+            alt="風除室 床見切 詳細図"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="portfolio-overlay absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span class="text-white text-sm font-medium">床見切り詳細図</span>
+          </div>
+        </a>
+      </div>
+      </div>
+
+      <!-- More link -->
+      <div class="text-center reveal">
+        <a
+          href={`${base}/portfolio/`}
+          class="inline-flex items-center gap-2 text-metallic-gold hover:text-gold-light transition-colors duration-200 text-sm font-medium group"
+        >
+          すべての実績
+          <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Divider: dark-mid → dark-accent (for CTA) -->
+  <SectionDivider direction="left" fromColor="dark-accent" toColor="dark-accent" />
+
+  <!-- Section 5: CTA Banner -->
+  <section class="bg-dark-accent">
+    <CTABanner
+      title="お見積り・ご相談はお気軽に"
+      description="図面の仕様・数量・納期などお気軽にご相談ください。まずはLINEかメールでお問い合わせいただけます。"
+      buttonText="お問い合わせ"
+      buttonHref="/contact/"
+    />
+  </section>
+
   <Footer />
 </Layout>
+
+<style>
+  /* Portfolio overlay gradient */
+  .portfolio-overlay {
+    background: linear-gradient(to top, rgba(15, 15, 26, 0.85) 0%, rgba(15, 15, 26, 0.2) 60%, transparent 100%);
+  }
+
+  /* Card hover shadow */
+  .strength-card:hover,
+  .service-card:hover {
+    box-shadow: 0 8px 24px rgba(196,163,90,0.2);
+  }
+
+  /* Tailwind override: metallic gold text */
+  .text-metallic-gold { color: #c4a35a; }
+  .hover\:text-gold-light:hover { color: #e8c87a; }
+  .text-steel-blue { color: #4a6fa5; }
+  .hover\:text-steel-light:hover { color: #6b8fc4; }
+</style>
+
+<script>
+  // 3D tilt for cards
+  document.querySelectorAll<HTMLElement>('.gradient-border, .service-card, [class*="card"]').forEach(card => {
+    card.style.transformStyle = 'preserve-3d';
+    card.style.willChange = 'transform';
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(600px) rotateX(${y * -6}deg) rotateY(${x * 6}deg) scale(1.02)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+</script>
