@@ -37,6 +37,7 @@ const {
   <title>{title}</title>
 </head>
 <body class="bg-dark-bg text-white font-noto antialiased">
+  <div class="page-curtain" id="page-curtain"></div>
   <slot />
 </body>
 </html>
@@ -80,15 +81,121 @@ const {
     border-color: #c4a35a;
   }
 
-  /* Scroll reveal animation */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+  /* === CSS Custom Properties === */
+  :root {
+    --color-dark-bg: #1a1a2e;
+    --color-dark-accent: #0f0f1a;
+    --color-steel-blue: #4a6fa5;
+    --color-steel-light: #6b8fc4;
+    --color-gold: #c4a35a;
+    --color-gold-light: #e8c87a;
+    --color-gold-dim: #8a6e35;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .reveal.active {
+  /* === Page Load Curtain === */
+  .page-curtain {
+    position: fixed;
+    inset: 0;
+    background: var(--color-dark-accent);
+    z-index: 9999;
+    transform-origin: top;
+    animation: curtain-lift 0.9s var(--ease-out-expo) 0.2s forwards;
+  }
+  .page-curtain.done { display: none; }
+
+  @keyframes curtain-lift {
+    0% { transform: scaleY(1); }
+    100% { transform: scaleY(0); }
+  }
+
+  /* === Gradient Text === */
+  .gradient-text {
+    background: linear-gradient(135deg, var(--color-gold-dim) 0%, var(--color-gold) 40%, var(--color-gold-light) 60%, var(--color-gold) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer-text 4s linear infinite;
+  }
+
+  @keyframes shimmer-text {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  /* === Scroll Reveal System (5 variants) === */
+  .reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-stagger > * {
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  .reveal { transform: translateY(40px); }
+  .reveal-left { transform: translateX(-60px); }
+  .reveal-right { transform: translateX(60px); }
+  .reveal-scale { transform: scale(0.88); }
+  .reveal-stagger > * { transform: translateY(30px); }
+
+  .reveal.active, .reveal-left.active, .reveal-right.active, .reveal-scale.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+  }
+  .reveal-stagger.active > * {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+  }
+  .reveal-stagger.active > *:nth-child(1) { transition-delay: 0ms; }
+  .reveal-stagger.active > *:nth-child(2) { transition-delay: 80ms; }
+  .reveal-stagger.active > *:nth-child(3) { transition-delay: 160ms; }
+  .reveal-stagger.active > *:nth-child(4) { transition-delay: 240ms; }
+  .reveal-stagger.active > *:nth-child(5) { transition-delay: 320ms; }
+  .reveal-stagger.active > *:nth-child(6) { transition-delay: 400ms; }
+  .reveal-stagger.active > *:nth-child(7) { transition-delay: 480ms; }
+  .reveal-stagger.active > *:nth-child(8) { transition-delay: 560ms; }
+  .reveal-stagger.active > *:nth-child(9) { transition-delay: 640ms; }
+  .reveal-stagger.active > *:nth-child(10) { transition-delay: 720ms; }
+
+  /* === Section Divider === */
+  .section-divider {
+    width: 100%;
+    height: 80px;
+    position: relative;
+    overflow: hidden;
+    line-height: 0;
+  }
+  .section-divider svg { display: block; width: 100%; height: 100%; }
+
+  /* === Reduced Motion === */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-stagger > * {
+      opacity: 1;
+      transform: none;
+    }
   }
 </style>
+
+<script>
+  // Page curtain cleanup
+  const curtain = document.getElementById('page-curtain');
+  if (curtain) {
+    curtain.addEventListener('animationend', () => curtain.classList.add('done'));
+  }
+
+  // Unified scroll reveal observer
+  const selectors = '.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-stagger';
+  const targets = document.querySelectorAll(selectors);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(el => observer.observe(el));
+</script>

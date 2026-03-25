@@ -13,19 +13,17 @@ const portfolioItems = [
 ];
 ---
 
-<section id="portfolio" class="py-24 bg-dark-bg reveal">
+<section id="portfolio" class="py-24 bg-dark-bg">
   <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-metallic-gold">
-      施工図サンプル
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 reveal-scale">
+      <span class="gradient-text">施工図サンプル</span>
     </h2>
-    <p class="text-center text-gray-400 mb-4">Portfolio</p>
-    <p class="text-center text-gray-500 text-sm mb-16">
-      ※現場名・社名は匿名化処理済み
-    </p>
+    <p class="text-center text-gray-400 mb-4 reveal">Portfolio</p>
+    <p class="text-center text-gray-500 text-sm mb-16 reveal">※現場名・社名は匿名化処理済み</p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-stagger">
       {portfolioItems.map((item, index) => (
-        <div class="group relative overflow-hidden rounded-lg border border-gray-700 hover:border-steel-blue transition-all duration-300 cursor-pointer"
+        <div class="group relative overflow-hidden rounded-lg border border-gray-700 hover:border-steel-blue transition-all duration-300 cursor-pointer hover:shadow-[0_0_30px_rgba(74,111,165,0.15)]"
              onclick={`openLightbox(${index})`}>
           <img
             src={`${base}portfolio/${item.file}`}
@@ -49,7 +47,7 @@ const portfolioItems = [
 </section>
 
 <!-- Lightbox -->
-<div id="lightbox" class="fixed inset-0 z-50 bg-black/95 hidden items-center justify-center p-4" onclick="closeLightbox()">
+<div id="lightbox" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden items-center justify-center p-4" onclick="closeLightbox()">
   <button class="absolute top-4 right-4 text-white hover:text-metallic-gold transition-colors">
     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -68,6 +66,7 @@ const portfolioItems = [
   <div class="max-w-5xl max-h-[90vh]" onclick="event.stopPropagation()">
     <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[85vh] object-contain">
     <p id="lightbox-caption" class="text-center text-white mt-4 text-lg"></p>
+    <p id="lightbox-counter" class="text-center text-gray-500 text-sm mt-2"></p>
   </div>
 </div>
 
@@ -77,6 +76,7 @@ const portfolioItems = [
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxCounter = document.getElementById('lightbox-counter');
 
   window.openLightbox = function(index) {
     currentIndex = index;
@@ -107,6 +107,7 @@ const portfolioItems = [
     lightboxImg.src = `${base}portfolio/${item.file}`;
     lightboxImg.alt = item.caption;
     lightboxCaption.textContent = item.caption;
+    if (lightboxCounter) lightboxCounter.textContent = `${currentIndex + 1} / ${portfolioItems.length}`;
   }
 
   // Keyboard navigation

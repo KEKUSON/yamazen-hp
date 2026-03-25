@@ -1,0 +1,223 @@
+---
+// Navbar.astro — sticky glass-morphism navigation bar
+---
+
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="#hero" class="text-lg font-bold tracking-wide shrink-0" aria-label="山全金物設計所 トップへ">
+      <span class="gradient-text">山全</span><span class="hidden sm:inline text-white/90">金物設計所</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <div class="hidden md:flex items-center gap-5 lg:gap-6">
+      <a href="#about"    class="nav-link text-sm text-gray-300 hover:text-white transition-colors duration-200">会社概要</a>
+      <a href="#services" class="nav-link text-sm text-gray-300 hover:text-white transition-colors duration-200">サービス</a>
+      <a href="#portfolio" class="nav-link text-sm text-gray-300 hover:text-white transition-colors duration-200">施工図</a>
+      <a href="#pricing"  class="nav-link text-sm text-gray-300 hover:text-white transition-colors duration-200">料金</a>
+      <a href="#workflow" class="nav-link text-sm text-gray-300 hover:text-white transition-colors duration-200">ご依頼の流れ</a>
+      <a href="#contact"
+         class="ml-2 px-5 py-2 bg-steel-blue hover:bg-steel-light text-white text-sm font-medium rounded
+                shadow-md hover:shadow-steel-blue/30 transition-all duration-300">
+        お問い合わせ
+      </a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="menu-toggle"
+      class="md:hidden relative w-8 h-8 flex flex-col justify-center items-center gap-[5px]"
+      aria-label="メニューを開く"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="ham-line block w-6 h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
+      <span class="ham-line block w-6 h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
+      <span class="ham-line block w-6 h-0.5 bg-white rounded-full transition-all duration-300 origin-center"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu overlay (separate from nav so it can cover full screen) -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 bg-dark-accent/95 backdrop-blur-lg z-50
+         flex flex-col items-center justify-center gap-8
+         opacity-0 pointer-events-none
+         transition-opacity duration-300"
+  aria-hidden="true"
+>
+  <!-- Close button (top-right) -->
+  <button
+    id="menu-close"
+    class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+    aria-label="メニューを閉じる"
+  >
+    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+
+  <!-- Logo inside overlay -->
+  <a href="#hero" class="mobile-nav-link text-2xl font-bold mb-2">
+    <span class="gradient-text">山全</span><span class="text-white/90">金物設計所</span>
+  </a>
+
+  <nav class="flex flex-col items-center gap-6" aria-label="モバイルナビゲーション">
+    <a href="#about"    class="mobile-nav-link text-2xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">会社概要</a>
+    <a href="#services" class="mobile-nav-link text-2xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">サービス</a>
+    <a href="#portfolio" class="mobile-nav-link text-2xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">施工図</a>
+    <a href="#pricing"  class="mobile-nav-link text-2xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">料金</a>
+    <a href="#workflow" class="mobile-nav-link text-2xl font-medium text-gray-300 hover:text-metallic-gold transition-colors duration-200">ご依頼の流れ</a>
+    <a href="#contact"
+       class="mobile-nav-link mt-2 px-10 py-3 bg-steel-blue hover:bg-steel-light text-white text-xl font-medium rounded
+              transition-all duration-300">
+      お問い合わせ
+    </a>
+  </nav>
+</div>
+
+<style>
+  /* Scrolled state — applied via JS */
+  #navbar.scrolled {
+    background-color: rgba(15, 15, 26, 0.90); /* dark-accent/90 */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(107, 143, 196, 0.15);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Active nav link (desktop) */
+  #navbar .nav-link.active {
+    color: #c4a35a; /* metallic-gold */
+  }
+
+  /* Active nav link (mobile) */
+  #mobile-menu .mobile-nav-link.active {
+    color: #c4a35a;
+  }
+
+  /* Mobile menu visible state */
+  #mobile-menu.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Hamburger → X transformation */
+  #menu-toggle.open .ham-line:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  #menu-toggle.open .ham-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  #menu-toggle.open .ham-line:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+</style>
+
+<script>
+  (function () {
+    const navbar     = document.getElementById('navbar') as HTMLElement;
+    const mobileMenu = document.getElementById('mobile-menu') as HTMLElement;
+    const menuToggle = document.getElementById('menu-toggle') as HTMLButtonElement;
+    const menuClose  = document.getElementById('menu-close') as HTMLButtonElement;
+
+    if (!navbar || !mobileMenu || !menuToggle || !menuClose) return;
+
+    // ── 1. Scroll → glass background ──────────────────────────────────────
+    let rafScheduled = false;
+    let isScrolled   = false;
+
+    function handleScroll() {
+      const shouldScroll = window.scrollY > 80;
+      if (shouldScroll !== isScrolled) {
+        isScrolled = shouldScroll;
+        navbar.classList.toggle('scrolled', isScrolled);
+      }
+      rafScheduled = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!rafScheduled) {
+        rafScheduled = true;
+        requestAnimationFrame(handleScroll);
+      }
+    }, { passive: true });
+
+    // Run once on load in case page is already scrolled
+    handleScroll();
+
+
+    // ── 2. Active section tracking (IntersectionObserver) ──────────────────
+    const sectionIds = ['hero', 'about', 'services', 'portfolio', 'pricing', 'workflow', 'contact'];
+    const desktopLinks = navbar.querySelectorAll<HTMLAnchorElement>('.nav-link');
+    const mobileLinks  = mobileMenu.querySelectorAll<HTMLAnchorElement>('.mobile-nav-link');
+
+    function setActive(id: string) {
+      const selector = `[href="#${id}"]`;
+      desktopLinks.forEach(el => el.classList.toggle('active', el.getAttribute('href') === `#${id}`));
+      mobileLinks.forEach(el  => el.classList.toggle('active', el.getAttribute('href') === `#${id}`));
+    }
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    }, {
+      rootMargin: '-30% 0px -60% 0px',
+      threshold: 0,
+    });
+
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) sectionObserver.observe(el);
+    });
+
+
+    // ── 3. Mobile menu helpers ─────────────────────────────────────────────
+    function openMenu() {
+      mobileMenu.classList.add('open');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      menuToggle.classList.add('open');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'メニューを閉じる');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      mobileMenu.classList.remove('open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      menuToggle.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'メニューを開く');
+      document.body.style.overflow = '';
+    }
+
+    menuToggle.addEventListener('click', () => {
+      if (menuToggle.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    menuClose.addEventListener('click', closeMenu);
+
+    // Close on any mobile link click
+    mobileMenu.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuToggle.classList.contains('open')) {
+        closeMenu();
+        menuToggle.focus();
+      }
+    });
+  })();
+</script>

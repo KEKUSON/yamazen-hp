@@ -1,16 +1,16 @@
 ---
 ---
 
-<section id="about" class="py-24 bg-dark-bg reveal">
+<section id="about" class="py-24 bg-dark-bg">
   <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-metallic-gold">
-      会社概要
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 reveal-scale">
+      <span class="gradient-text">会社概要</span>
     </h2>
-    <p class="text-center text-gray-400 mb-16">About Us</p>
+    <p class="text-center text-gray-400 mb-16 reveal">About Us</p>
 
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <!-- Text content -->
-      <div class="space-y-6">
+      <div class="space-y-6 reveal-left">
         <p class="text-lg leading-relaxed">
           2016年より建築金物施工図の設計に従事。
           父の事業にて3年の実務経験を積んだ後、独立開業。
@@ -30,20 +30,86 @@
       </div>
 
       <!-- Stats cards -->
-      <div class="grid grid-cols-1 gap-6">
-        <div class="bg-dark-accent rounded-lg p-8 text-center border border-gray-700 hover:border-steel-blue transition-colors">
-          <p class="text-5xl font-bold text-metallic-gold mb-2">約10年</p>
+      <div class="grid grid-cols-1 gap-6 reveal-right">
+        <!-- First card -->
+        <div class="stat-card bg-dark-accent rounded-lg p-8 text-center border border-gray-700">
+          <p class="text-5xl font-bold text-metallic-gold mb-2 counter" data-target="10" data-prefix="約" data-suffix="年">0</p>
           <p class="text-gray-400">実績年数</p>
         </div>
-        <div class="bg-dark-accent rounded-lg p-8 text-center border border-gray-700 hover:border-steel-blue transition-colors">
+
+        <!-- Second card (no counter — plain text) -->
+        <div class="stat-card bg-dark-accent rounded-lg p-8 text-center border border-gray-700">
           <p class="text-5xl font-bold text-metallic-gold mb-2">JWW / AutoCAD</p>
           <p class="text-gray-400">対応CAD</p>
         </div>
-        <div class="bg-dark-accent rounded-lg p-8 text-center border border-gray-700 hover:border-steel-blue transition-colors">
-          <p class="text-5xl font-bold text-metallic-gold mb-2">10社以上</p>
+
+        <!-- Third card -->
+        <div class="stat-card bg-dark-accent rounded-lg p-8 text-center border border-gray-700">
+          <p class="text-5xl font-bold text-metallic-gold mb-2 counter" data-target="10" data-prefix="" data-suffix="社以上">0</p>
           <p class="text-gray-400">取引先 金属製作会社</p>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="section-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,0 1440,0 1440,80" fill="#0f0f1a"/>
+    </svg>
+  </div>
 </section>
+
+<style>
+.stat-card {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.stat-card:hover {
+  border-color: #4a6fa5;
+  box-shadow: 0 0 0 1px rgba(74,111,165,0.3), 0 8px 32px rgba(74,111,165,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+</style>
+
+<script>
+// Counter animation
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target, 10);
+  const suffix = el.dataset.suffix || '';
+  const prefix = el.dataset.prefix || '';
+  const duration = 1800;
+  const start = performance.now();
+  function step(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = prefix + Math.round(eased * target) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+const statsColumn = document.querySelector('.reveal-right');
+if (statsColumn) {
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.counter').forEach(animateCounter);
+        counterObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  counterObs.observe(statsColumn);
+}
+
+// 3D card tilt
+document.querySelectorAll('.stat-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(600px) rotateX(${y * 8}deg) rotateY(${-x * 8}deg) scale(1.02)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+</script>

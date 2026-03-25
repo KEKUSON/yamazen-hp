@@ -2,39 +2,36 @@
 ---
 
 <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark-accent">
-  <!-- CAD grid pattern background -->
-  <div class="absolute inset-0 opacity-10">
-    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4a6fa5" stroke-width="0.5"/>
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#grid)" />
-    </svg>
+  <!-- Layer 1: Animated CAD grid (CSS repeating-linear-gradient, NOT SVG) -->
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <!-- Layer 2: CSS particle field (12 dots floating upward) -->
+  <div class="hero-particles" aria-hidden="true">
+    <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+    <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+    <span class="particle"></span><span class="particle"></span><span class="particle"></span>
+    <span class="particle"></span><span class="particle"></span><span class="particle"></span>
   </div>
 
+  <!-- Layer 3: Radial glow pulse -->
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <!-- Content with staggered entrance -->
   <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
-    <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-      <span class="text-metallic-gold">山全</span>金物設計所
+    <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight hero-title" style="opacity:0">
+      <span class="gradient-text">山全</span>金物設計所
     </h1>
-    <p class="text-2xl md:text-3xl text-steel-blue font-medium mb-4">
+    <p class="text-2xl md:text-3xl text-steel-blue font-medium mb-4 hero-sub" style="opacity:0">
       建築金物施工図の設計・作図
     </p>
-    <p class="text-lg md:text-xl text-gray-300 mb-8">
+    <p class="text-lg md:text-xl text-gray-300 mb-8 hero-desc" style="opacity:0">
       10年の実績 — 官公庁施設から集合住宅まで
     </p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a
-        href="#contact"
-        class="inline-block px-8 py-4 bg-steel-blue hover:bg-opacity-80 text-white font-medium rounded transition-all duration-300 hover:scale-105"
-      >
+    <div class="flex flex-col sm:flex-row gap-4 justify-center hero-cta" style="opacity:0">
+      <a href="#contact" class="cta-primary inline-block px-8 py-4 bg-steel-blue hover:bg-steel-light text-white font-medium rounded transition-all duration-300">
         お問い合わせ
       </a>
-      <a
-        href="#portfolio"
-        class="inline-block px-8 py-4 border-2 border-metallic-gold text-metallic-gold hover:bg-metallic-gold hover:text-dark-bg font-medium rounded transition-all duration-300"
-      >
+      <a href="#portfolio" class="cta-secondary inline-block px-8 py-4 border-2 border-metallic-gold text-metallic-gold hover:bg-metallic-gold hover:text-dark-bg font-medium rounded transition-all duration-300">
         施工図サンプル
       </a>
     </div>
@@ -48,16 +45,112 @@
   </div>
 </section>
 
-<script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-      }
-    });
-  }, { threshold: 0.1 });
+<style>
+  /* Animated CAD grid */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(74,111,165,0.08) 39px, rgba(74,111,165,0.08) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(74,111,165,0.08) 39px, rgba(74,111,165,0.08) 40px);
+    background-size: 40px 40px;
+    animation: grid-drift 20s linear infinite;
+  }
+  .hero-grid::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 199px, rgba(74,111,165,0.14) 199px, rgba(74,111,165,0.14) 200px),
+      repeating-linear-gradient(90deg, transparent, transparent 199px, rgba(74,111,165,0.14) 199px, rgba(74,111,165,0.14) 200px);
+    background-size: 200px 200px;
+    animation: grid-drift 20s linear infinite;
+  }
+  @keyframes grid-drift {
+    0%   { background-position: 0 0, 0 0; }
+    100% { background-position: 40px 40px, 40px 40px; }
+  }
 
-  reveals.forEach(el => observer.observe(el));
-</script>
+  /* Radial glow */
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(74,111,165,0.12) 0%, transparent 70%);
+    animation: glow-pulse 6s ease-in-out infinite alternate;
+  }
+  @keyframes glow-pulse {
+    0%   { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 1;   transform: scale(1.08); }
+  }
+
+  /* Particles */
+  .hero-particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .particle {
+    position: absolute;
+    bottom: -10px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #4a6fa5;
+    opacity: 0;
+    animation: particle-float 8s ease-in infinite;
+  }
+  .particle:nth-child(1)  { left: 5%;  width: 2px; height: 2px; animation-delay: 0s;    animation-duration: 9s;    background: #c4a35a; }
+  .particle:nth-child(2)  { left: 12%; width: 4px; height: 4px; animation-delay: 1.2s;  animation-duration: 7s; }
+  .particle:nth-child(3)  { left: 22%; width: 2px; height: 2px; animation-delay: 2.4s;  animation-duration: 11s; }
+  .particle:nth-child(4)  { left: 31%; width: 3px; height: 3px; animation-delay: 0.6s;  animation-duration: 8s;    background: #c4a35a; }
+  .particle:nth-child(5)  { left: 40%; width: 2px; height: 2px; animation-delay: 3.1s;  animation-duration: 9.5s; }
+  .particle:nth-child(6)  { left: 50%; width: 4px; height: 4px; animation-delay: 1.8s;  animation-duration: 7.5s; background: #c4a35a; }
+  .particle:nth-child(7)  { left: 59%; width: 2px; height: 2px; animation-delay: 0.3s;  animation-duration: 10s; }
+  .particle:nth-child(8)  { left: 67%; width: 3px; height: 3px; animation-delay: 2.7s;  animation-duration: 8.5s; }
+  .particle:nth-child(9)  { left: 74%; width: 2px; height: 2px; animation-delay: 4s;    animation-duration: 7s;    background: #c4a35a; }
+  .particle:nth-child(10) { left: 82%; width: 4px; height: 4px; animation-delay: 1.5s;  animation-duration: 9s; }
+  .particle:nth-child(11) { left: 90%; width: 2px; height: 2px; animation-delay: 3.6s;  animation-duration: 11s; }
+  .particle:nth-child(12) { left: 96%; width: 3px; height: 3px; animation-delay: 0.9s;  animation-duration: 8s;    background: #c4a35a; }
+
+  @keyframes particle-float {
+    0%   { transform: translateY(0) translateX(0);    opacity: 0; }
+    10%  { opacity: 0.7; }
+    90%  { opacity: 0.3; }
+    100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+  }
+
+  /* Content staggered entrance (fires after page curtain) */
+  .hero-title,
+  .hero-sub,
+  .hero-desc,
+  .hero-cta {
+    animation: hero-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .hero-title { animation-delay: 0.8s; }
+  .hero-sub   { animation-delay: 1.05s; }
+  .hero-desc  { animation-delay: 1.2s; }
+  .hero-cta   { animation-delay: 1.4s; }
+
+  @keyframes hero-rise {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* CTA glow on hover */
+  .cta-primary {
+    position: relative;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  .cta-primary:hover {
+    box-shadow: 0 0 20px rgba(74,111,165,0.6), 0 0 40px rgba(74,111,165,0.2);
+    transform: translateY(-2px);
+  }
+  .cta-secondary {
+    transition: box-shadow 0.3s ease, transform 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+  }
+  .cta-secondary:hover {
+    box-shadow: 0 0 20px rgba(196,163,90,0.4), 0 0 40px rgba(196,163,90,0.15);
+    transform: translateY(-2px);
+  }
+</style>

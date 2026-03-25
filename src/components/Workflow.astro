@@ -33,22 +33,32 @@ const steps = [
 ];
 ---
 
-<section id="workflow" class="py-24 bg-dark-bg reveal">
+<section id="workflow" class="py-24 bg-dark-bg">
   <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-metallic-gold">
-      ご依頼の流れ
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 reveal-scale">
+      <span class="gradient-text">ご依頼の流れ</span>
     </h2>
-    <p class="text-center text-gray-400 mb-16">Workflow</p>
+    <p class="text-center text-gray-400 mb-16 reveal">Workflow</p>
 
     <!-- Desktop: horizontal flow -->
-    <div class="hidden md:block">
-      <div class="flex items-start justify-between relative">
-        <!-- Connection line -->
-        <div class="absolute top-10 left-0 right-0 h-0.5 bg-gradient-to-r from-steel-blue via-metallic-gold to-steel-blue"></div>
+    <div class="hidden md:block relative">
+      <!-- Animated SVG connector line -->
+      <svg class="workflow-line absolute top-10 left-10 right-10 h-5 overflow-visible" preserveAspectRatio="none" viewBox="0 0 1000 20" aria-hidden="true">
+        <defs>
+          <linearGradient id="wf-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#4a6fa5"/>
+            <stop offset="50%" stop-color="#c4a35a"/>
+            <stop offset="100%" stop-color="#4a6fa5"/>
+          </linearGradient>
+        </defs>
+        <line class="workflow-line-path" x1="0" y1="10" x2="1000" y2="10" stroke="url(#wf-grad)" stroke-width="2"/>
+      </svg>
 
-        {steps.map((step, index) => (
-          <div class="relative flex flex-col items-center text-center z-10" style={`animation-delay: ${index * 100}ms`}>
-            <div class="w-20 h-20 rounded-full bg-dark-accent border-2 border-steel-blue flex items-center justify-center mb-4">
+      <!-- Step nodes -->
+      <div class="flex items-start justify-between relative reveal-stagger">
+        {steps.map((step) => (
+          <div class="workflow-step relative flex flex-col items-center text-center z-10">
+            <div class="workflow-node w-20 h-20 rounded-full bg-dark-accent border-2 border-steel-blue flex items-center justify-center mb-4 transition-all duration-300">
               <span class="text-2xl font-bold text-metallic-gold">{step.num}</span>
             </div>
             <h3 class="text-lg font-bold text-white mb-2">{step.title}</h3>
@@ -59,10 +69,10 @@ const steps = [
     </div>
 
     <!-- Mobile: vertical flow -->
-    <div class="md:hidden space-y-6">
-      {steps.map((step, index) => (
-        <div class="flex items-start gap-4 relative" key={step.num}>
-          <div class="w-12 h-12 rounded-full bg-dark-accent border-2 border-steel-blue flex items-center justify-center flex-shrink-0">
+    <div class="md:hidden workflow-mobile reveal-stagger" style="padding-left: 60px; position: relative;">
+      {steps.map((step) => (
+        <div class="flex items-start gap-4 relative mb-8">
+          <div class="absolute -left-[60px] w-12 h-12 rounded-full bg-dark-accent border-2 border-steel-blue flex items-center justify-center flex-shrink-0 transition-all duration-300">
             <span class="text-lg font-bold text-metallic-gold">{step.num}</span>
           </div>
           <div class="pt-2">
@@ -74,3 +84,56 @@ const steps = [
     </div>
   </div>
 </section>
+
+<style>
+  /* SVG line draw animation */
+  .workflow-line-path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    transition: stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .workflow-line.active .workflow-line-path {
+    stroke-dashoffset: 0;
+  }
+
+  /* Node hover pulse */
+  .workflow-step:hover .workflow-node {
+    border-color: #c4a35a;
+    box-shadow: 0 0 20px rgba(196, 163, 90, 0.3);
+  }
+
+  /* Mobile vertical line */
+  .workflow-mobile::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    background: linear-gradient(to bottom, #4a6fa5, #c4a35a, #4a6fa5);
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .workflow-mobile.active::before {
+    transform: scaleY(1);
+  }
+</style>
+
+<script>
+  const workflowSection = document.getElementById('workflow');
+  if (workflowSection) {
+    const lineObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const svgLine = entry.target.querySelector('.workflow-line');
+          if (svgLine) svgLine.classList.add('active');
+          const mobileList = entry.target.querySelector('.workflow-mobile');
+          if (mobileList) mobileList.classList.add('active');
+          lineObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    lineObs.observe(workflowSection);
+  }
+</script>
