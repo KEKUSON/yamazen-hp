@@ -26,7 +26,7 @@ const portfolioItems = [
         <div class="group relative overflow-hidden rounded-lg border border-gray-700 hover:border-steel-blue transition-all duration-300 cursor-pointer hover:shadow-[0_0_30px_rgba(74,111,165,0.15)]"
              onclick={`openLightbox(${index})`}>
           <img
-            src={`${base}portfolio/${item.file}`}
+            src={`${base}/portfolio/${item.file}`}
             alt={item.caption}
             class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
@@ -104,7 +104,7 @@ const portfolioItems = [
 
   function updateLightbox() {
     const item = portfolioItems[currentIndex];
-    lightboxImg.src = `${base}portfolio/${item.file}`;
+    lightboxImg.src = `${base}/portfolio/${item.file}`;
     lightboxImg.alt = item.caption;
     lightboxCaption.textContent = item.caption;
     if (lightboxCounter) lightboxCounter.textContent = `${currentIndex + 1} / ${portfolioItems.length}`;
