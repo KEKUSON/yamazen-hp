@@ -1,0 +1,119 @@
+---
+const portfolioItems = [
+  { file: 'sample_tarapp.webp', caption: 'SUSタラップ 平面詳細図' },
+  { file: '01_tesuri_okujo.webp', caption: '屋上手摺 施工図' },
+  { file: '02_tesuri_pipe.webp', caption: 'パイプ手摺 施工図' },
+  { file: '03_tarapp_catwalk.webp', caption: 'キャットウォーク タラップ' },
+  { file: '04_sanpowaku.webp', caption: '三方枠 チェックバック図' },
+  { file: '05_mendai.webp', caption: '配管バック面台 施工図' },
+  { file: '06_tesuri_corridor.webp', caption: '通路手摺 施工図' },
+  { file: '07_yukamikiri.webp', caption: '風除室 床見切 詳細図' },
+  { file: '08_stopper.webp', caption: '落下防止ストッパー 詳細図' },
+];
+---
+
+<section id="portfolio" class="py-24 bg-dark-bg reveal">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-metallic-gold">
+      施工図サンプル
+    </h2>
+    <p class="text-center text-gray-400 mb-4">Portfolio</p>
+    <p class="text-center text-gray-500 text-sm mb-16">
+      ※現場名・社名は匿名化処理済み
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {portfolioItems.map((item, index) => (
+        <div class="group relative overflow-hidden rounded-lg border border-gray-700 hover:border-steel-blue transition-all duration-300 cursor-pointer"
+             onclick={`openLightbox(${index})`}>
+          <img
+            src={`/portfolio/${item.file}`}
+            alt={item.caption}
+            class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+            <p class="p-4 text-white font-medium">{item.caption}</p>
+          </div>
+          <!-- Zoom icon -->
+          <div class="absolute top-4 right-4 bg-dark-accent/80 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+            </svg>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 z-50 bg-black/95 hidden items-center justify-center p-4" onclick="closeLightbox()">
+  <button class="absolute top-4 right-4 text-white hover:text-metallic-gold transition-colors">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+  <button class="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-metallic-gold transition-colors" onclick="event.stopPropagation(); prevImage()">
+    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+    </svg>
+  </button>
+  <button class="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-metallic-gold transition-colors" onclick="event.stopPropagation(); nextImage()">
+    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+    </svg>
+  </button>
+  <div class="max-w-5xl max-h-[90vh]" onclick="event.stopPropagation()">
+    <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[85vh] object-contain">
+    <p id="lightbox-caption" class="text-center text-white mt-4 text-lg"></p>
+  </div>
+</div>
+
+<script define:vars={{ portfolioItems }}>
+  let currentIndex = 0;
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+
+  window.openLightbox = function(index) {
+    currentIndex = index;
+    updateLightbox();
+    lightbox.classList.remove('hidden');
+    lightbox.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeLightbox = function() {
+    lightbox.classList.add('hidden');
+    lightbox.classList.remove('flex');
+    document.body.style.overflow = '';
+  };
+
+  window.nextImage = function() {
+    currentIndex = (currentIndex + 1) % portfolioItems.length;
+    updateLightbox();
+  };
+
+  window.prevImage = function() {
+    currentIndex = (currentIndex - 1 + portfolioItems.length) % portfolioItems.length;
+    updateLightbox();
+  };
+
+  function updateLightbox() {
+    const item = portfolioItems[currentIndex];
+    lightboxImg.src = `/portfolio/${item.file}`;
+    lightboxImg.alt = item.caption;
+    lightboxCaption.textContent = item.caption;
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('hidden')) {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    }
+  });
+</script>

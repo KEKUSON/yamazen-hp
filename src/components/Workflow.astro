@@ -1,0 +1,76 @@
+---
+const steps = [
+  {
+    num: '01',
+    title: 'お問い合わせ',
+    desc: 'LINE or メールでご連絡ください'
+  },
+  {
+    num: '02',
+    title: 'お打ち合わせ',
+    desc: '図面の内容・仕様・納期を確認'
+  },
+  {
+    num: '03',
+    title: 'お見積り',
+    desc: '物量に応じたお見積りを提出'
+  },
+  {
+    num: '04',
+    title: '作図',
+    desc: 'CADにて施工図を作成'
+  },
+  {
+    num: '05',
+    title: 'チェックバック',
+    desc: 'ご確認・修正対応'
+  },
+  {
+    num: '06',
+    title: '納品',
+    desc: 'PDF + CADデータ (JWW/DWG) にて納品'
+  },
+];
+---
+
+<section id="workflow" class="py-24 bg-dark-bg reveal">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-metallic-gold">
+      ご依頼の流れ
+    </h2>
+    <p class="text-center text-gray-400 mb-16">Workflow</p>
+
+    <!-- Desktop: horizontal flow -->
+    <div class="hidden md:block">
+      <div class="flex items-start justify-between relative">
+        <!-- Connection line -->
+        <div class="absolute top-10 left-0 right-0 h-0.5 bg-gradient-to-r from-steel-blue via-metallic-gold to-steel-blue"></div>
+
+        {steps.map((step, index) => (
+          <div class="relative flex flex-col items-center text-center z-10" style={`animation-delay: ${index * 100}ms`}>
+            <div class="w-20 h-20 rounded-full bg-dark-accent border-2 border-steel-blue flex items-center justify-center mb-4">
+              <span class="text-2xl font-bold text-metallic-gold">{step.num}</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">{step.title}</h3>
+            <p class="text-sm text-gray-400 max-w-[140px]">{step.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Mobile: vertical flow -->
+    <div class="md:hidden space-y-6">
+      {steps.map((step, index) => (
+        <div class="flex items-start gap-4 relative" key={step.num}>
+          <div class="w-12 h-12 rounded-full bg-dark-accent border-2 border-steel-blue flex items-center justify-center flex-shrink-0">
+            <span class="text-lg font-bold text-metallic-gold">{step.num}</span>
+          </div>
+          <div class="pt-2">
+            <h3 class="text-lg font-bold text-white mb-1">{step.title}</h3>
+            <p class="text-sm text-gray-400">{step.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

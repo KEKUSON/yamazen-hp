@@ -1,0 +1,63 @@
+---
+---
+
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark-accent">
+  <!-- CAD grid pattern background -->
+  <div class="absolute inset-0 opacity-10">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#4a6fa5" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+    </svg>
+  </div>
+
+  <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+    <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+      <span class="text-metallic-gold">山全</span>金物設計所
+    </h1>
+    <p class="text-2xl md:text-3xl text-steel-blue font-medium mb-4">
+      建築金物施工図の設計・作図
+    </p>
+    <p class="text-lg md:text-xl text-gray-300 mb-8">
+      10年の実績 — 官公庁施設から集合住宅まで
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a
+        href="#contact"
+        class="inline-block px-8 py-4 bg-steel-blue hover:bg-opacity-80 text-white font-medium rounded transition-all duration-300 hover:scale-105"
+      >
+        お問い合わせ
+      </a>
+      <a
+        href="#portfolio"
+        class="inline-block px-8 py-4 border-2 border-metallic-gold text-metallic-gold hover:bg-metallic-gold hover:text-dark-bg font-medium rounded transition-all duration-300"
+      >
+        施工図サンプル
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+    </svg>
+  </div>
+</section>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+</script>

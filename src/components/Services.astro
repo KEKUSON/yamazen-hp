@@ -1,0 +1,88 @@
+---
+const services = [
+  {
+    title: '手摺',
+    subtitle: 'Handrails',
+    description: '製作手摺・SUS手摺・パイプ手摺・階段手摺・屋上手摺',
+    icon: 'M3 12h18M6 12v6a2 2 0 002 2h2v-4h4v4h2a2 2 0 002-2v-6'
+  },
+  {
+    title: 'タラップ',
+    subtitle: 'Ladders',
+    description: 'SUSタラップ・キャットウォーク',
+    icon: 'M4 6h16M4 12h16M4 18h16M8 6v12M16 6v12'
+  },
+  {
+    title: 'パネル',
+    subtitle: 'Panels',
+    description: '壁パネル・天井パネル・外部パネル・庇パネル',
+    icon: 'M4 4h16v16H4zM4 12h16M12 4v16'
+  },
+  {
+    title: '三方枠',
+    subtitle: '3-Way Frames',
+    description: 'EV三方枠・便所三方枠・各種付け枠',
+    icon: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z'
+  },
+  {
+    title: '面台',
+    subtitle: 'Window Sills',
+    description: 'ライニング面台・配管バック面台',
+    icon: 'M2 18h20M6 18V8l6-4 6 4v10'
+  },
+  {
+    title: '特殊金物',
+    subtitle: 'Special Hardware',
+    description: '吊金物・床見切・落下防止ストッパー・ウォールプロテクター',
+    icon: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'
+  },
+  {
+    title: '階段',
+    subtitle: 'Stairs',
+    description: '螺旋階段・RC階段・EV機械室階段',
+    icon: 'M4 20h4v-4h4v-4h4v-4h4v-4'
+  },
+  {
+    title: '柵・フェンス',
+    subtitle: 'Fencing',
+    description: '転落防止柵・進入防止柵・衝突防止柵',
+    icon: 'M4 4v16M20 4v16M4 8h16M4 16h16'
+  },
+  {
+    title: 'カバー・水切り',
+    subtitle: 'Covers',
+    description: '外部梁化粧カバー・ECP水切り・笠木',
+    icon: 'M2 8h20v12H2zM6 4h12v4H6z'
+  },
+  {
+    title: 'エキスパンション',
+    subtitle: 'EXP.J',
+    description: '床EXP.J・手摺EXP.J',
+    icon: 'M4 12h16M12 4v16M8 8l4 4 4-4'
+  }
+];
+---
+
+<section id="services" class="py-24 bg-dark-accent reveal">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-metallic-gold">
+      対応可能な図面
+    </h2>
+    <p class="text-center text-gray-400 mb-16">Services</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+      {services.map((service) => (
+        <div class="bg-dark-bg rounded-lg p-6 border border-gray-700 hover:border-steel-blue hover:scale-105 transition-all duration-300 group">
+          <div class="w-12 h-12 mb-4 text-steel-blue group-hover:text-metallic-gold transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d={service.icon} />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-1">{service.title}</h3>
+          <p class="text-xs text-steel-blue mb-3">{service.subtitle}</p>
+          <p class="text-sm text-gray-400 leading-relaxed">{service.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
