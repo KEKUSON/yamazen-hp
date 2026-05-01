@@ -16,6 +16,7 @@ const formattedNumber = `:${String(number).padStart(2, '0')}`;
   <div class="flex items-start gap-4 md:gap-6">
     <!-- Large metallic number with glow -->
     <div class="relative flex-shrink-0 leading-none">
+      <span class="drafting-tick" aria-hidden="true"></span>
       <div class="number-glow absolute inset-0 -z-10" aria-hidden="true"></div>
       <span class="number-display leading-none" aria-hidden="true">
         {formattedNumber}
@@ -50,8 +51,9 @@ const formattedNumber = `:${String(number).padStart(2, '0')}`;
   }
 
   .number-display {
+    font-family: 'JetBrains Mono', monospace;
     font-size: clamp(3.5rem, 8vw, 6rem); /* text-7xl equivalent, responsive */
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1;
     background: linear-gradient(135deg, #8a6e35 0%, #c4a35a 40%, #e8c87a 60%, #c4a35a 100%);
     background-size: 200% auto;
@@ -59,7 +61,7 @@ const formattedNumber = `:${String(number).padStart(2, '0')}`;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shimmer-text 4s linear infinite;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
   }
 
   @keyframes shimmer-text {

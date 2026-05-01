@@ -25,6 +25,9 @@ const base = import.meta.env.BASE_URL;
     <span class="particle"></span><span class="particle"></span><span class="particle"></span>
   </div>
 
+  <!-- Page-load scanline -->
+  <div class="hero-scanline" aria-hidden="true"></div>
+
   <!-- Layer 3: Radial glow pulse -->
   <div class="hero-glow" aria-hidden="true"></div>
 
@@ -33,7 +36,7 @@ const base = import.meta.env.BASE_URL;
 
   <!-- Content with staggered entrance -->
   <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
-    <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight hero-title" style="opacity:0">
+    <h1 class="text-5xl md:text-7xl font-bold mb-6 hero-title" style="opacity:0">
       <span class="gradient-text">山全</span>金物設計所
     </h1>
     <p class="text-2xl md:text-3xl text-steel-blue font-medium mb-4 hero-sub" style="opacity:0">
@@ -261,6 +264,36 @@ const base = import.meta.env.BASE_URL;
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 5;
+  }
+
+  /* Page-load scanline — single sweep */
+  .hero-scanline {
+    position: absolute;
+    left: 0; right: 0;
+    top: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(196,163,90,0.55) 50%, transparent 100%);
+    animation: hero-scan 1.4s cubic-bezier(0.4,0,0.2,1) 1.0s forwards;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 6;
+  }
+  @keyframes hero-scan {
+    0%   { opacity: 0;   transform: translateY(0); }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.5; }
+    100% { opacity: 0;   transform: translateY(100vh); }
+  }
+
+  /* Subtle dot pattern overlay on hero-grid */
+  .hero-grid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 50% 50%, rgba(196,163,90,0.08) 1px, transparent 1.5px);
+    background-size: 18px 18px;
+    pointer-events: none;
+    mix-blend-mode: screen;
   }
 </style>
 

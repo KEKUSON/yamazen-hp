@@ -18,7 +18,11 @@ export default {
         'blue-glow': 'rgba(74, 111, 165, 0.15)',
       },
       fontFamily: {
-        noto: ['"Noto Sans JP"', 'sans-serif'],
+        noto:   ['"Noto Sans JP"', 'sans-serif'],
+        mincho: ['"Shippori Mincho B1"', 'serif'],
+        gothic: ['"Zen Kaku Gothic Antique"', 'sans-serif'],
+        klee:   ['"Klee One"', 'cursive'],
+        mono:   ['"JetBrains Mono"', 'monospace'],
       },
       animation: {
         'shimmer': 'shimmer 4s linear infinite',

@@ -20,3 +20,28 @@ body {
   .bg-dark-bg { background-color: #1a1a2e; }
   .bg-dark-accent { background-color: #0f0f1a; }
 }
+
+/* === Blueprint paper dot texture === */
+.blueprint-paper {
+  position: relative;
+}
+.blueprint-paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 50% 50%, rgba(74,111,165,0.10) 1px, transparent 1.5px);
+  background-size: 14px 14px;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.45;
+  z-index: 0;
+}
+
+/* === Drafting Tick — short horizontal mark === */
+.drafting-tick {
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: linear-gradient(90deg, #c4a35a 0%, transparent 100%);
+  margin-bottom: 0.5rem;
+}
